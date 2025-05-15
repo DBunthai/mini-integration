@@ -1,0 +1,6 @@
+
+2 - design domain, picking tool excalidraw, whimsical
+
+1 - define domain and scope
+    o banking, fintech, that has payment
+	o open to exten other service
