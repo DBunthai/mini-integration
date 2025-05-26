@@ -1,4 +1,8 @@
 
+3 - Do high level design?
+       o what technlogies need to be selected?
+	   o  reviiew SWA spring microservice
+
 2 - design domain, picking tool excalidraw, whimsical
 
 1 - define domain and scope

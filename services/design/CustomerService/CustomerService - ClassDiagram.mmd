@@ -1,0 +1,98 @@
+classDiagram
+    Customer --> Contact
+    Customer --> Address
+    Customer "1" --> "*" FileInfo
+    
+    Contact --> Email
+    Contact --> Phone
+    
+    CustomerDAO --> Customer
+    FileInfoDAO --> FileInfo
+
+    CustomerQueryService --> CustomerDAO
+    FileInfoQueryService --> FileInfoDAO
+
+    CustomerCommandService --> CustomerDAO
+    FileInfoCommandService --> FileInfoDAO    
+
+    CustomerQueryController --> CustomerQueryService
+    FileInfoQueryController --> FileInfoQueryService
+
+    namespace Domain {
+    
+        class Customer {
+            <<Entity>>
+            - Integer seq
+            - UUID id
+            - String firstName
+            - String lastName
+            - Gender gender
+            - Contact contact
+            - Address address
+            - Set<FileInfo> fileInfo
+        }
+
+        class Contact {
+            <<ValueObject>>
+            - Phone phone
+            - Email email
+        }
+
+        class Phone {
+            <<ValueObject>>
+            - String value
+        }
+
+        class Email {
+            <<ValueObject>>
+            - String value
+        }
+
+        class Address {
+            <<ValueObject>>
+            - String line
+            - String city
+            - String state
+            - String zipCode
+        }    
+
+        class Gender {
+            <<Enum>>
+            MALE
+            FEMALE
+        }
+
+        class FileInfo {
+            <<Entity>>
+            - Integer seq
+            - UUID fileKey
+            - String fileName
+            - String extension
+            - number fileSize
+        }
+    }
+
+    namespace Repository {
+            class CustomerDAO { }
+            class FileInfoDAO { }
+    }
+
+    namespace QueryService {
+            class CustomerQueryService { }
+            class FileInfoQueryService { }
+    }
+
+    namespace CommandService {
+            class CustomerCommandService { }
+            class FileInfoCommandService { }
+    }
+
+    namespace QueryController {
+            class CustomerQueryController { }
+            class FileInfoQueryController { }
+    }
+
+    namespace CommandController {
+            class CustomerCommandController { }
+            class FileInfoCommandController { }
+    }

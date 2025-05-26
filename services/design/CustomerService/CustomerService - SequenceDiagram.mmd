@@ -1,0 +1,51 @@
+---
+title: Register Online
+---
+sequenceDiagram
+    autonumber
+    actor c as Customer
+    participant api as ApiGateway    
+
+    participant fs as FileService
+    participant s3 as S3
+    participant cs as CustomerService    
+    participant csCont as CommandController
+    participant csServ as CommandService
+    participant csRepo as Repository
+    participant csDb as Postgres
+    participant rb as RabbitMQ
+    participant nf as NotificationService
+
+    c -) api: POST: {domain}/api/v1/customer/register <br> Upload Files
+    api -) fs: navigate to FileService
+
+    
+    fs -) s3: Send to S3
+    s3 -) s3: store file
+    s3 --) fs: fileKey
+    fs -) fs: StoreFile Metadata
+    fs -) rb: publish FileUploaded event
+    fs --) api: filekey
+    api --) c: fileKey 
+
+
+    c -) api: POST: {domain}/api/v1/customers/register <br> Customer register
+    api -) cs: navigate to CustomerService
+
+    cs -) csCont: navigate to Register API
+
+    csCont -) csServ: called to CommandService
+
+
+    csServ -) csRepo: called to Repository
+    csRepo -> csRepo: domain validate
+
+    csRepo -) csDb: Save data
+
+    csServ -) rb: publish CustomerRegistered event
+    csCont --) api: HTTP Status 201
+    api --) c: recieved HTTP Status 201
+
+    rb -) nf: consume CustomerRegistered event
+    nf -) nf: send to customer
+    nf -) c: send notification
