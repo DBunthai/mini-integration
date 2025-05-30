@@ -1,0 +1,41 @@
+---
+title: Edit Customer Profile
+---
+sequenceDiagram
+    autonumber
+    actor c as Customer
+    participant api as ApiGateway    
+
+
+    participant cs as CustomerService    
+    participant csCont as CommandController
+    participant csServ as CommandService
+    participant csRepo as Repository
+    participant csDb as Postgres
+    participant rb as RabbitMQ
+    participant nf as NotificationService
+
+
+
+
+    c -) api: POST: {domain}/api/v1/customers <br> Edit
+    Note left of c: { "FirstName": "New" <br> "LastName": "New" <br> "Gender": "Male" }
+    api -) cs: navigate to CustomerService
+
+    cs -) csCont: navigate to edit customer API
+
+    csCont -) csServ: called to CommandService
+
+
+    csServ -) csRepo: called to Repository
+    csRepo -> csRepo: domain validate
+
+    csRepo -) csDb: Save data
+
+    csServ -) rb: publish CustomerEdited event
+    csCont --) api: HTTP Status 201
+    api --) c: recieved HTTP Status 201
+
+    rb -) nf: consume CustomerEdited event
+    nf -) nf: send to customer
+    nf -) c: send notification
