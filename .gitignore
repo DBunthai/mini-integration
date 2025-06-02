@@ -1,0 +1,45 @@
+# Node modules (if using Node)
+node_modules/
+
+# Python cache (if using Python)
+__pycache__/
+
+# Java/Gradle/Maven
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# VSCode
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Docker volumes & backups
+volumes/
+*.bak
+*.sql
+
+# Docker Compose override files
+docker-compose.override.yml
+
+# Ignore Postgres/Redis data directories (if bind-mounted)
+data/
+pgdata/
+redisdata/
