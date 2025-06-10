@@ -6,18 +6,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mini.integration.customerservice.domain.enumtype.Gender;
 
 import java.util.UUID;
 
 
-@Data
+@Getter
+@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 public class Customer {
 
@@ -25,8 +33,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer seqId;
+    @Column(name = "customer_seq", insertable = false, updatable = false)
+    private Integer seq;
 
     @NotNull(message = "First Name is required")
     @Size(max = 100, message = "First Name length must be 1 to 100")
@@ -45,8 +53,7 @@ public class Customer {
     @Embedded
     private Address address;
 
-    public Customer() {
 
-    }
+
 //    private  Set<FileInfo> fileInfos;
 }

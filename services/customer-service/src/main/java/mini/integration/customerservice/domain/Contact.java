@@ -4,9 +4,18 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Email;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import mini.integration.customerservice.domain.constant.PhoneRegion;
 import mini.integration.customerservice.exception.InvalidArgumentException;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Embeddable
 public class Contact {
 

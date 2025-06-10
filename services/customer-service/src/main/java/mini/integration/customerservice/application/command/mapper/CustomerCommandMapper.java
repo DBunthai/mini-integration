@@ -6,7 +6,7 @@ import mini.integration.customerservice.domain.event.CustomerRegisterEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel="spring")
 public interface CustomerCommandMapper {
 
     @Mapping(target = "firstName", source = "firstName")

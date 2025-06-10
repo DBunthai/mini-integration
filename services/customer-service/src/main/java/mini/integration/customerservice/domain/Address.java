@@ -3,9 +3,16 @@ package mini.integration.customerservice.domain;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Value;
-import org.hibernate.validator.constraints.Length;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Embeddable
 public class Address {
 
@@ -24,6 +31,5 @@ public class Address {
     @Size(max = 5, message = "ZipCode is exceeded 5 characters")
     @NotNull(message = "ZipCode is required")
     private String zipCode;
-
 
 }

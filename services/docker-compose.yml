@@ -63,10 +63,18 @@ services:
 
     redismini-slave:
         image: miniredis
-        container_name: redismini-slave
+        container_name: redismini-slave  
         build:
             context: ./redis-mini
-        command: ["redis-server", "--replicaof", "redismini", "6379"]
+        command: [
+            "redis-server",
+             "--bind", "0.0.0.0",
+            #  "--port", "6380",
+            "--replicaof", "redismini", "6379",
+            # "--replica-announce-ip", "redismini-slave"
+            # ,
+            # "--replica-announce-port", "6380"
+        ]        
         ports:
             - 6380:6379
         depends_on:
@@ -74,7 +82,7 @@ services:
 
     redissentinel:
         image: sentinel
-        container_name: redissentinel
+        container_name: redissentinel     
         build:
             context: ./sentinel
         ports:
@@ -84,7 +92,7 @@ services:
 
     redissentinel-2:
         image: sentinel
-        container_name: redissentinel-2
+        container_name: redissentinel-2     
         build:
             context: ./sentinel
         ports:
@@ -92,112 +100,107 @@ services:
         depends_on:
             - redismini
 
-    kafka-ui:
-        container_name: kafka-ui
-        image: provectuslabs/kafka-ui:latest
-        ports:
-        - 7070:8080
-        depends_on:
-        - kafka0
-        - kafka1
-        - kafka2
-        # - schema-registry0
-        # - kafka-connect0
-        environment:
-            KAFKA_CLUSTERS_0_NAME: local
-            KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092,kafka1:29092,kafka2:29092
-            KAFKA_CLUSTERS_0_METRICS_PORT: 9997
-            # KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry0:8085
-            # KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: first
-            # KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect0:8083
+    # kafka-ui:
+    #     container_name: kafka-ui
+    #     image: provectuslabs/kafka-ui:latest
+    #     ports:
+    #     - 7070:8080
+    #     depends_on:
+    #     - kafka0
+    #     - kafka1
+    #     - kafka2
+    #     # - schema-registry0
+    #     # - kafka-connect0
+    #     environment:
+    #         KAFKA_CLUSTERS_0_NAME: local
+    #         KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka0:29092,kafka1:29092,kafka2:29092
+    #         KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+    #         # KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry0:8085
+    #         # KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: first
+    #         # KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect0:8083
 
-    kafka0:
-        image: confluentinc/cp-kafka:7.5.0
-        hostname: kafka0
-        container_name: kafka0
-        ports:
-        - 9092:9092
-        - 9997:9997
-        environment:
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092
-            KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-            KAFKA_PROCESS_ROLES: 'broker,controller'
-            CLUSTER_ID: AFm0RpTnR7s5IvNm2aPstg
-            KAFKA_NODE_ID: 1
-            KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093,2@kafka1:29093,3@kafka2:29093'
-            KAFKA_LISTENERS: 'PLAINTEXT://kafka0:29092,CONTROLLER://kafka0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
-            KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-            KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-            KAFKA_JMX_PORT: 9997
-            KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka0 -Dcom.sun.management.jmxremote.rmi.port=9997
+    # kafka0:
+    #     image: confluentinc/cp-kafka:7.5.0
+    #     hostname: kafka0
+    #     container_name: kafka0
+    #     ports:
+    #     - 9092:9092
+    #     - 9997:9997
+    #     environment:
+    #         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+    #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092
+    #         KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    #         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    #         KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    #         KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    #         KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    #         KAFKA_PROCESS_ROLES: 'broker,controller'
+    #         CLUSTER_ID: AFm0RpTnR7s5IvNm2aPstg
+    #         KAFKA_NODE_ID: 1
+    #         KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093,2@kafka1:29093,3@kafka2:29093'
+    #         KAFKA_LISTENERS: 'PLAINTEXT://kafka0:29092,CONTROLLER://kafka0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+    #         KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+    #         KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+    #         KAFKA_JMX_PORT: 9997
+    #         KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka0 -Dcom.sun.management.jmxremote.rmi.port=9997
 
-    kafka1:
-        image: confluentinc/cp-kafka:7.5.0
-        hostname: kafka1
-        container_name: kafka1
-        environment:
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://localhost:9092
-            KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-            KAFKA_PROCESS_ROLES: 'broker,controller'
-            KAFKA_NODE_ID: 2
-            CLUSTER_ID: AFm0RpTnR7s5IvNm2aPstg
-            KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093,2@kafka1:29093,3@kafka2:29093'
-            KAFKA_LISTENERS: 'PLAINTEXT://kafka1:29092,CONTROLLER://kafka1:29093,PLAINTEXT_HOST://0.0.0.0:9092'
-            KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-            KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-            KAFKA_JMX_PORT: 9997
-            KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka1 -Dcom.sun.management.jmxremote.rmi.port=9997
+    # kafka1:
+    #     image: confluentinc/cp-kafka:7.5.0
+    #     hostname: kafka1
+    #     container_name: kafka1
+    #     environment:
+    #         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+    #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://localhost:9092
+    #         KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    #         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    #         KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    #         KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    #         KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    #         KAFKA_PROCESS_ROLES: 'broker,controller'
+    #         KAFKA_NODE_ID: 2
+    #         CLUSTER_ID: AFm0RpTnR7s5IvNm2aPstg
+    #         KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093,2@kafka1:29093,3@kafka2:29093'
+    #         KAFKA_LISTENERS: 'PLAINTEXT://kafka1:29092,CONTROLLER://kafka1:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+    #         KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+    #         KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+    #         KAFKA_JMX_PORT: 9997
+    #         KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka1 -Dcom.sun.management.jmxremote.rmi.port=9997
 
-    kafka2:
-        image: confluentinc/cp-kafka:7.5.0
-        hostname: kafka2
-        container_name: kafka2
-        environment:
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29092,PLAINTEXT_HOST://localhost:9092
-            KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-            KAFKA_PROCESS_ROLES: 'broker,controller'
-            KAFKA_NODE_ID: 3
-            CLUSTER_ID: AFm0RpTnR7s5IvNm2aPstg
-            KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093,2@kafka1:29093,3@kafka2:29093'
-            KAFKA_LISTENERS: 'PLAINTEXT://kafka2:29092,CONTROLLER://kafka2:29093,PLAINTEXT_HOST://0.0.0.0:9092'
-            KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-            KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-            KAFKA_JMX_PORT: 9997
-            KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka1 -Dcom.sun.management.jmxremote.rmi.port=9997
-        # volumes:
-        # - ./scripts/update_run_cluster.sh:/tmp/update_run.sh
-        # - ./scripts/clusterID:/tmp/clusterID
-        # command: "bash -c 'if [ ! -f /tmp/update_run.sh ]; then echo \"ERROR: Did you forget the update_run.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update_run.sh && /etc/confluent/docker/run ; fi'"
+    # kafka2:
+    #     image: confluentinc/cp-kafka:7.5.0
+    #     hostname: kafka2
+    #     container_name: kafka2
+    #     environment:
+    #         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+    #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29092,PLAINTEXT_HOST://localhost:9092
+    #         KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+    #         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    #         KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    #         KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    #         KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    #         KAFKA_PROCESS_ROLES: 'broker,controller'
+    #         KAFKA_NODE_ID: 3
+    #         CLUSTER_ID: AFm0RpTnR7s5IvNm2aPstg
+    #         KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka0:29093,2@kafka1:29093,3@kafka2:29093'
+    #         KAFKA_LISTENERS: 'PLAINTEXT://kafka2:29092,CONTROLLER://kafka2:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+    #         KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+    #         KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+    #         KAFKA_JMX_PORT: 9997
+    #         KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka1 -Dcom.sun.management.jmxremote.rmi.port=9997
 
 
-
-    kafka-init-topics:
-        image: confluentinc/cp-kafka:7.5.0
-        volumes:
-        - ./volumes/message.json:/data/message.json
-        depends_on:
-        - kafka0
-        command: "bash -c 'echo Waiting for Kafka to be ready... && \
-                cub kafka-ready -b kafka0:29092 1 30 && \
-                kafka-topics --create --topic second.users --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
-                kafka-topics --create --topic second.messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
-                kafka-topics --create --topic first.messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
-                kafka-console-producer --bootstrap-server kafka0:29092 --topic second.users < /data/message.json'"
+    # kafka-init-topics:
+    #     image: confluentinc/cp-kafka:7.5.0
+    #     volumes:
+    #     - ./volumes/message.json:/data/message.json
+    #     depends_on:
+    #     - kafka0
+    #     command: "bash -c 'echo Waiting for Kafka to be ready... && \
+    #             cub kafka-ready -b kafka0:29092 1 30 && \
+    #             kafka-topics --create --topic second.users --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
+    #             kafka-topics --create --topic second.messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
+    #             kafka-topics --create --topic first.messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka0:29092 && \
+    #             kafka-console-producer --bootstrap-server kafka0:29092 --topic second.users < /data/message.json'"
 
 
 volumes:

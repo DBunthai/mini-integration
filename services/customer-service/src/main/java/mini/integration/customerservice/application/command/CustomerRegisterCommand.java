@@ -2,11 +2,17 @@ package mini.integration.customerservice.application.command;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
-@Value
-@NoArgsConstructor(force = true)
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CustomerRegisterCommand {
 
     @NotNull(message = "First Name is required")
