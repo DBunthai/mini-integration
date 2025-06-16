@@ -2,35 +2,46 @@ package mini.integration.customerservice.domain;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mini.integration.customerservice.domain.constant.PhoneRegion;
-import mini.integration.customerservice.exception.InvalidArgumentException;
+import mini.integration.customerservice.lib.util.PhoneLib;
 
 @Getter
-@Builder
+@Builder(builderClassName = "ContactBuilder", toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Embeddable
 public class Contact {
 
-
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-    @Email(message = "Invalid Email")
+    @Column(nullable = false, unique = true)
     private String email;
 
+    public static class ContactBuilder {
+        public Contact build() {
+            return new Contact(validatePhoneNumber(phoneNumber), email);
+        }
+    }
 
-    public void setPhoneNumber(String phoneNumber) throws InvalidArgumentException {
+    private static String validatePhoneNumber(String phoneNumber) {
+        var error = new IllegalArgumentException("Invalid phone number");
         try {
-            PhoneNumberUtil.getInstance().parse(phoneNumber, PhoneRegion.US);
+            var phoneUtil = PhoneLib.phoneNumberUtil();
+            var sanityPhoneNumber = phoneUtil.parse(phoneNumber, PhoneRegion.US);
+            if (!phoneUtil.isValidNumber(sanityPhoneNumber)) {
+                throw error;
+            }
+            return phoneUtil.format(sanityPhoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164);
         } catch (NumberParseException e) {
-            throw new InvalidArgumentException("Invalid Phone Number");
+            throw error;
         }
     }
 

@@ -5,8 +5,9 @@ import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.event.CustomerRegisterEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel="spring")
+@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerCommandMapper {
 
     @Mapping(target = "firstName", source = "firstName")

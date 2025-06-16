@@ -8,4 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface CustomerWriteRepo extends JpaRepository<Customer, UUID> {
+
+    boolean existsByContactEmail(String email);
+    boolean existsByContactPhoneNumber(String phoneNumber);
+
 }

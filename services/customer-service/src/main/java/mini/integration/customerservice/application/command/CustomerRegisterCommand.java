@@ -26,7 +26,9 @@ public class CustomerRegisterCommand {
     @NotNull(message = "Gender is required")
     private String gender;
 
+    @NotNull
     private ContactCommand contact;
 
+    @NotNull
     private AddressCommand address;
 }

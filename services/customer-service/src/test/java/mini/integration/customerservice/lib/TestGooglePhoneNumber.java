@@ -3,16 +3,15 @@ package mini.integration.customerservice.lib;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
-import org.assertj.core.api.Assertions;
+import mini.integration.customerservice.domain.Contact;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.List;
 import java.util.stream.Stream;
 
-public class GooglePhoneNumber {
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+public class TestGooglePhoneNumber {
 
     PhoneNumberUtil util = PhoneNumberUtil.getInstance();
 
@@ -45,15 +44,19 @@ public class GooglePhoneNumber {
     @Test
     void TestPhoneNumber_Failed() {
 
-        PhoneNumberUtil util = PhoneNumberUtil.getInstance();
         Stream.of(
             "asdfsd",
-            "sdfwewe"
+            "sdfwewe",
+            "(703) 513-6334asdf"
 
         ).forEach(
             number -> {
+
                 assertThatThrownBy(() -> {
-                    util.parse(number, "US");
+                    Contact contact = Contact.builder()
+                        .phoneNumber(number)
+                        .build();
+                    System.out.println(contact.getPhoneNumber());
                 });
             }
         );

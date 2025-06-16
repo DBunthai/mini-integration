@@ -1,8 +1,7 @@
 package mini.integration.customerservice.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,20 +15,16 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Address {
 
-    @Size(max = 100, message = "Line is exceeded 100 characters")
-    @NotNull(message = "Line is required")
+    @Column(nullable = false)
     private String line;
 
-    @Size(max = 50, message = "City is exceeded 50 characters")
-    @NotNull(message = "City is required")
+    @Column(nullable = false)
     private String city;
 
-    @Size(max = 50, message = "State is exceeded 50 characters")
-    @NotNull(message = "State is required")
+    @Column(nullable = false)
     private String state;
 
-    @Size(max = 5, message = "ZipCode is exceeded 5 characters")
-    @NotNull(message = "ZipCode is required")
+    @Column(nullable = false)
     private String zipCode;
 
 }

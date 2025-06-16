@@ -4,6 +4,7 @@ import mini.integration.customerservice.application.command.CustomerRegisterComm
 import mini.integration.customerservice.application.command.mapper.CustomerCommandMapper;
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.event.CustomerRegisterEvent;
+import mini.integration.customerservice.exception.BusinessRuleException;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepo;
 import mini.integration.customerservice.lib.CommandHandler;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,7 +27,16 @@ public class CustomerRegisterHandler implements CommandHandler<CustomerRegisterC
 
 
     @Override
-    public void handle(CustomerRegisterCommand command) {
+    public void handle(CustomerRegisterCommand command) throws BusinessRuleException {
+
+        if (customerWriteRepo.existsByContactEmail(command.getContact().getEmail())) {
+            throw new BusinessRuleException("Email has been used");
+        }
+
+        if (customerWriteRepo.existsByContactPhoneNumber(command.getContact().getEmail())) {
+            throw new BusinessRuleException("Phone number has been used");
+        }
+
         Customer customer = customerCommandMapper.customerRegisterCommandToCustomer(command);
         customer = customerWriteRepo.save(customer);
         CustomerRegisterEvent customerRegisterEvent = customerCommandMapper.customerToCustomerRegisteredEvent(customer);

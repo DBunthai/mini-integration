@@ -1,8 +1,11 @@
 package mini.integration.customerservice.domain;
 
+import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mini.integration.customerservice.domain.enumtype.Gender;
+import mini.integration.customerservice.lib.EntityBased;
 
 import java.util.UUID;
 
@@ -27,24 +31,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
-public class Customer {
+public class Customer extends EntityBased {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-    @Column(name = "customer_seq", insertable = false, updatable = false)
-    private Integer seq;
-
-    @NotNull(message = "First Name is required")
-    @Size(max = 100, message = "First Name length must be 1 to 100")
+    @Column(nullable = false)
     private String firstName;
 
-    @NotNull(message = "Last Name is required")
-    @Size(max = 100, message = "Last Name length must be 1 to 100")
+    @Column(nullable = false)
     private String lastName;
 
-    @NotNull(message = "Gender is required")
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Embedded
