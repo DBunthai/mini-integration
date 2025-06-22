@@ -2,7 +2,8 @@ package mini.integration.customerservice.application.command.mapper;
 
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
 import mini.integration.customerservice.domain.Customer;
-import mini.integration.customerservice.domain.event.CustomerRegisterEvent;
+import mini.integration.customerservice.domain.event.CustomerProfileEditedEvent;
+import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -23,6 +24,13 @@ public interface CustomerCommandMapper {
     @Mapping(target = "lastName", source = "lastName")
     @Mapping(target = "email", source = "contact.email")
     @Mapping(target = "phoneNumber", source = "contact.phoneNumber")
-    CustomerRegisterEvent customerToCustomerRegisteredEvent(Customer customer);
+    CustomerRegisteredEvent customerToCustomerRegisteredEvent(Customer customer);
+
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "email", source = "contact.email")
+    @Mapping(target = "phoneNumber", source = "contact.phoneNumber")
+    CustomerProfileEditedEvent customerToCustomerProfileEditedEvent(Customer customer);
 
 }

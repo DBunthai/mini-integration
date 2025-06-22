@@ -209,7 +209,8 @@ services:
         command: "bash -c 'echo Waiting for Kafka to be ready... && \
                 cub kafka-ready -b kafka0:29092 1 30 && \
                 kafka-topics --create --topic accountcreated --partitions 3 --replication-factor 3 --if-not-exists --bootstrap-server kafka0:29092 && \
-                kafka-topics --create --topic customer.registered --partitions 3 --replication-factor 3 --if-not-exists --bootstrap-server kafka0:29092'"
+                kafka-topics --create --topic customer.registered --partitions 3 --replication-factor 3 --if-not-exists --bootstrap-server kafka0:29092 &&\
+                kafka-topics --create --topic customer.edited --partitions 3 --replication-factor 3 --if-not-exists --bootstrap-server kafka0:29092'"
 
 
 volumes:

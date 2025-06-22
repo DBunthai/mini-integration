@@ -7,6 +7,7 @@ import mini.integration.customerservice.domain.enumtype.Gender;
 import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepo;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepo;
 import mini.integration.customerservice.lib.util.FakerLib;
+import mini.integration.customerservice.util.UtilTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,31 +26,9 @@ public class TestJPA {
     @Test
     public void TestJPA_Read_Write() {
 
-        var faker = FakerLib.faker();
-        var addrFaker = faker.address();
-        var name = faker.name();
 
-        Address address = Address.builder()
-            .line(String.join(addrFaker.buildingNumber(), addrFaker.streetName()))
-            .city(addrFaker.city())
-            .state(addrFaker.state())
-            .zipCode(addrFaker.zipCode())
-            .build();
 
-        Contact contact = Contact.builder()
-            .email(faker.internet().emailAddress())
-            .phoneNumber(faker.phoneNumber().cellPhone())
-            .build();
-
-        Customer customer = Customer.builder()
-            .firstName(name.firstName())
-            .lastName(name.lastName())
-            .gender(Gender.valueOf(faker.gender().binaryTypes().toUpperCase()))
-            .address(address)
-            .contact(contact)
-            .build();
-
-        Customer createdCustomer = customerWriteRepo.save(customer);
+        Customer createdCustomer = customerWriteRepo.save(UtilTest.create());
 
         assertThatNoException().as("READ DB - Customer not found")
             .isThrownBy(() -> customerReadRepo.findById(createdCustomer.getId()));

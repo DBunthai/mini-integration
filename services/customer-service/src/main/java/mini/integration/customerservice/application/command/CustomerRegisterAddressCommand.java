@@ -7,13 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AddressCommand {
+public class CustomerRegisterAddressCommand {
     @Size(max = 100, message = "Line is exceeded 100 characters")
     @NotNull(message = "Line is required")
     private String line;

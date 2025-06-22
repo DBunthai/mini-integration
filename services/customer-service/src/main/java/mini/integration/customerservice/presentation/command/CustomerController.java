@@ -1,9 +1,13 @@
 package mini.integration.customerservice.presentation.command;
 
+import jakarta.validation.Valid;
+import mini.integration.customerservice.application.command.CustomerProfileEditCommand;
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
-import mini.integration.customerservice.exception.BusinessRuleException;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
-import org.springframework.beans.factory.annotation.Autowired;
+import mini.integration.customerservice.lib.exception.GeneralException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +26,15 @@ public class CustomerController {
 
 
     @PostMapping("/register")
-    public void register(@RequestBody CustomerRegisterCommand command) throws BusinessRuleException {
+    public ResponseEntity<?> register(@RequestBody @Valid CustomerRegisterCommand command) throws GeneralException {
         commandBus.dispatch(command);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> edit(@RequestBody @Valid CustomerProfileEditCommand command) throws GeneralException {
+        commandBus.dispatch(command);
+        return ResponseEntity.ok().build();
     }
 
 }

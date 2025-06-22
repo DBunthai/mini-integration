@@ -1,4 +1,4 @@
-package mini.integration.customerservice.lib;
+package mini.integration.customerservice.lib.exception;
 
 
 

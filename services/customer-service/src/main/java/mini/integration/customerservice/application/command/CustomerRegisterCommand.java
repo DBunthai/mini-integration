@@ -1,5 +1,6 @@
 package mini.integration.customerservice.application.command;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -7,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 @Getter
 @Builder
@@ -26,9 +26,11 @@ public class CustomerRegisterCommand {
     @NotNull(message = "Gender is required")
     private String gender;
 
-    @NotNull
-    private ContactCommand contact;
+    @Valid
+    @NotNull(message = "Contact is required")
+    private CustomerRegisterContactCommand contact;
 
-    @NotNull
-    private AddressCommand address;
+    @Valid
+    @NotNull(message = "Address is required")
+    private CustomerRegisterAddressCommand address;
 }

@@ -1,7 +1,7 @@
 package mini.integration.customerservice.command;
 
-import mini.integration.customerservice.application.command.AddressCommand;
-import mini.integration.customerservice.application.command.ContactCommand;
+import mini.integration.customerservice.application.command.CustomerRegisterAddressCommand;
+import mini.integration.customerservice.application.command.CustomerRegisterContactCommand;
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
 import mini.integration.customerservice.lib.util.FakerLib;
@@ -27,7 +27,7 @@ public class CustomerRegisteredHandlerTest {
                 .lastName(faker.name().lastName())
                 .gender(faker.gender().binaryTypes().toUpperCase())
                 .address(
-                    AddressCommand.builder()
+                    CustomerRegisterAddressCommand.builder()
                         .line(String.join(address.buildingNumber(), address.streetName()))
                         .city(address.city())
                         .state(address.state())
@@ -35,7 +35,7 @@ public class CustomerRegisteredHandlerTest {
                         .build()
                 )
                 .contact(
-                    ContactCommand.builder()
+                    CustomerRegisterContactCommand.builder()
                         .email(faker.internet().emailAddress())
                         .phoneNumber(faker.phoneNumber().cellPhone())
                         .build()

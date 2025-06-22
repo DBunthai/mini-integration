@@ -8,13 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ContactCommand {
+public class CustomerRegisterContactCommand {
 
     @Size(max = 50, message = "Phone number is exceeded 50 characters")
     @NotNull(message = "Phone number is required")

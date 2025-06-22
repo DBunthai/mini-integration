@@ -1,6 +1,6 @@
 package mini.integration.customerservice.infrastructure.listener;
 
-import mini.integration.customerservice.domain.event.CustomerRegisterEvent;
+import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
 import mini.integration.customerservice.lib.topic.CustomerEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,7 +16,7 @@ public class CustomerRegisteredListener {
     }
 
     @EventListener
-    public void listening(CustomerRegisterEvent event) {
+    public void listening(CustomerRegisteredEvent event) {
 
         // send to kafka
         kafkaTemplate.send(CustomerEvent.CUSTOMER_REGISTERED_EVENT, event.toString());
