@@ -22,22 +22,18 @@ public class CustomerProfileEditCommand {
     @UUID(message = "Id is incorrect format")
     private String id;
 
-    @Builder.Default
-    @Size(max = 100, message = "First Name length must be 1 to 100")
-    private Optional<String> firstName = Optional.empty();
 
-    @Builder.Default
-    @Size(max = 100, message = "Last Name length must be 1 to 100")
-    private Optional<String> lastName = Optional.empty();
+    private Optional<@Size(max = 100, message = "First Name length must be 1 to 100") String> firstName;
 
-    @Builder.Default
-    private Optional<String> gender = Optional.empty();
+    private Optional<@Size(max = 100, message = "Last Name length must be 1 to 100") String> lastName;
 
-    @Builder.Default
-    private Optional<CustomerEditContactCommand> contactCommand = Optional.empty();
+    private Optional<String> gender;
 
-    @Builder.Default
-    private Optional<CustomerEditAddressCommand> addressCommand = Optional.empty();
+    private Optional<@Size(max = 500, message = "Description is exceed 500 characters") String> description;
+
+    private Optional<CustomerEditContactCommand> contact;
+
+    private Optional<CustomerEditAddressCommand> address;
 
 
     @Getter
@@ -46,17 +42,13 @@ public class CustomerProfileEditCommand {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CustomerEditContactCommand {
 
-        @Builder.Default
-        @Size(max = 50, message = "Phone number is exceeded 50 characters")
-        private Optional<String> phoneNumber = Optional.empty();
+        private Optional<@Size(max = 50, message = "Phone number is exceeded 50 characters") String> phoneNumber;
 
-        @Builder.Default
-        @Size(max = 320, message = "Email is exceeded 50 characters")
-        @Email(message = "Invalid Email")
-        private Optional<String> email = Optional.empty();
+        private Optional<
+            @Size(max = 320, message = "Email is exceeded 50 characters")
+            @Email(message = "Invalid Email") String> email;
 
     }
-
 
     @Getter
     @Builder
@@ -64,21 +56,13 @@ public class CustomerProfileEditCommand {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CustomerEditAddressCommand {
 
-        @Builder.Default
-        @Size(max = 100, message = "Line is exceeded 100 characters")
-        private Optional<String> line = Optional.empty();
+        private Optional<@Size(max = 100, message = "Line is exceeded 100 characters") String> line;
 
-        @Builder.Default
-        @Size(max = 50, message = "City is exceeded 50 characters")
-        private Optional<String> city = Optional.empty();
+        private Optional<@Size(max = 50, message = "City is exceeded 50 characters") String> city;
 
-        @Builder.Default
-        @Size(max = 50, message = "State is exceeded 50 characters")
-        private Optional<String> state = Optional.empty();
+        private Optional<@Size(max = 50, message = "State is exceeded 50 characters") String> state;
 
-        @Builder.Default
-        @Size(max = 5, message = "ZipCode is exceeded 5 characters")
-        private Optional<String> zipCode = Optional.empty();
+        private Optional<@Size(max = 5, message = "ZipCode is exceeded 5 characters") String> zipCode;
     }
 
 

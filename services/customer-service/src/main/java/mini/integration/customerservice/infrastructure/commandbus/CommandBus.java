@@ -6,7 +6,7 @@ import mini.integration.customerservice.lib.exception.GeneralException;
 
 public interface CommandBus {
 
-    <C> void registerHandler(Class<C> type, CommandHandler<C> handler);
+    <C, R> void registerHandler(Class<C> type, CommandHandler<C, R> handler);
 
-    <C> void dispatch(C command) throws GeneralException;
+    <C, R> R dispatch(C command) throws GeneralException;
 }

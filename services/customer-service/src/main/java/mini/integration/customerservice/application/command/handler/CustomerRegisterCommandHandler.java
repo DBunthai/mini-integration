@@ -6,6 +6,8 @@ import mini.integration.customerservice.application.command.mapper.CustomerComma
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
 import mini.integration.customerservice.exception.BusinessRuleException;
+import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
+import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepo;
 import mini.integration.customerservice.lib.CommandHandler;
 import org.springframework.context.ApplicationEventPublisher;
@@ -13,14 +15,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
-public class CustomerRegisterHandler implements CommandHandler<CustomerRegisterCommand> {
+public class CustomerRegisterCommandHandler implements CommandHandler<CustomerRegisterCommand, CustomerRegisterDTO> {
 
 
     private final CustomerWriteRepo customerWriteRepo;
     private final CustomerCommandMapper customerCommandMapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public CustomerRegisterHandler(CustomerWriteRepo customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
+    public CustomerRegisterCommandHandler(CustomerWriteRepo customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
         this.customerWriteRepo = customerWriteRepo;
         this.customerCommandMapper = customerCommandMapper;
         this.eventPublisher = eventPublisher;
@@ -28,7 +30,7 @@ public class CustomerRegisterHandler implements CommandHandler<CustomerRegisterC
 
 
     @Override
-    public void handle(CustomerRegisterCommand command) throws BusinessRuleException {
+    public CustomerRegisterDTO handle(CustomerRegisterCommand command) throws BusinessRuleException {
 
         if (customerWriteRepo.existsByContactEmail(command.getContact().getEmail())) {
             throw new BusinessRuleException("Email has been used");
@@ -40,10 +42,12 @@ public class CustomerRegisterHandler implements CommandHandler<CustomerRegisterC
 
         Customer customer = customerCommandMapper.customerRegisterCommandToCustomer(command);
         log.info("Registering customer");
-        customer = customerWriteRepo.save(customer);
-        log.info("Customer registered: {}", customer);
+        Customer registeredCustomer = customerWriteRepo.save(customer);
+        log.info("Customer registered: {}", registeredCustomer);
         CustomerRegisteredEvent customerRegisteredEvent = customerCommandMapper.customerToCustomerRegisteredEvent(customer);
         eventPublisher.publishEvent(customerRegisteredEvent);
         log.info("Published customer.registered: {}", customerRegisteredEvent);
+
+        return customerCommandMapper.customerToCustomerRegisterDTO(registeredCustomer);
     }
 }

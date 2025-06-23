@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -81,6 +82,27 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
                 .message(error.getDefaultMessage())
                 .build()
             ).toList();
+
+        ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+            .code(HttpStatus.BAD_REQUEST)
+            .errors(errors)
+            .build();
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * @apiNote handle when unknown property has been request API
+     */
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        logger.info(ex.getMessage(), ex);
+        String message = ex.getMostSpecificCause().toString();
+        List<ExceptionDetailResponse> errors = List.of(
+            ExceptionDetailResponse.builder()
+                .message(message.substring(message.indexOf(":") + 1, message.indexOf("\"", message.indexOf("\"") + 2)))
+                .build()
+        );
 
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
             .code(HttpStatus.BAD_REQUEST)

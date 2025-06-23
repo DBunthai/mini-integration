@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import mini.integration.customerservice.application.command.CustomerProfileEditCommand;
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
+import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.lib.exception.GeneralException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,11 @@ public class CustomerController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid CustomerRegisterCommand command) throws GeneralException {
-        commandBus.dispatch(command);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<CustomerRegisterDTO> register(@RequestBody @Valid CustomerRegisterCommand command) throws GeneralException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(commandBus.dispatch(command));
     }
 
-    @PatchMapping
+    @PatchMapping("/profile")
     public ResponseEntity<?> edit(@RequestBody @Valid CustomerProfileEditCommand command) throws GeneralException {
         commandBus.dispatch(command);
         return ResponseEntity.ok().build();

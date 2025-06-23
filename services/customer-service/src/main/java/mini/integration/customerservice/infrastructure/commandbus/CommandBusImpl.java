@@ -1,6 +1,5 @@
 package mini.integration.customerservice.infrastructure.commandbus;
 
-import mini.integration.customerservice.exception.BusinessRuleException;
 import mini.integration.customerservice.lib.CommandHandler;
 import mini.integration.customerservice.lib.exception.GeneralException;
 import org.springframework.stereotype.Component;
@@ -10,15 +9,17 @@ import java.util.Map;
 
 @Component
 public class CommandBusImpl implements CommandBus {
-    private final Map<Class<?>, CommandHandler<?>> handlers = new HashMap<>();
+    private final Map<Class<?>, CommandHandler<?, ?>> handlers = new HashMap<>();
 
-    public <C> void registerHandler(Class<C> type, CommandHandler<C> handler) {
+    public <C, R> void registerHandler(Class<C> type, CommandHandler<C, R> handler) {
         handlers.put(type, handler);
     }
 
-    public <C> void dispatch(C command) throws GeneralException {
-        CommandHandler<C> handler = (CommandHandler<C>) handlers.get(command.getClass());
-        if (handler != null) handler.handle(command);
-        else throw new IllegalArgumentException("No handler found for " + command.getClass());
+    public <C, R> R dispatch(C command) throws GeneralException {
+        CommandHandler<C, R> handler = (CommandHandler<C, R>) handlers.get(command.getClass());
+        if (handler != null) {
+            return handler.handle(command);
+        }
+        else throw new GeneralException("No handler found for " + command.getClass());
     }
 }

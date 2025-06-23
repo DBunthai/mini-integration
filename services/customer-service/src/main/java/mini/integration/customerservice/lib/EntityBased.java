@@ -14,7 +14,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
@@ -32,10 +32,10 @@ public abstract class EntityBased {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdDate;
+    private OffsetDateTime createdDate;
 
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private OffsetDateTime lastModifiedDate;
 
     @CreatedBy
     @Column(updatable = false)
