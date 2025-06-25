@@ -1,10 +1,8 @@
 classDiagram
+    EntityBased <|-- Customer 
     Customer --> Contact
     Customer --> Address
     Customer "1" --> "*" FileInfo
-    
-    Contact --> Email
-    Contact --> Phone
     
     CustomerDAO --> Customer
     FileInfoDAO --> FileInfo
@@ -20,13 +18,22 @@ classDiagram
 
     namespace Domain {
     
-        class Customer {
-            <<Entity>>
+        class EntityBased {
             - Integer seq
             - UUID id
+            - OffsetDateTime createdDate
+            - OffsetDateTime lastModifiedDate
+            - String createdBy
+            - String lastModifiedBy
+        }
+
+        class Customer {
+            <<Entity>>
+
             - String firstName
             - String lastName
             - Gender gender
+            - String description
             - Contact contact
             - Address address
             - Set<FileInfo> fileInfo
@@ -34,19 +41,10 @@ classDiagram
 
         class Contact {
             <<ValueObject>>
-            - Phone phone
-            - Email email
+            - String phone
+            - String email
         }
 
-        class Phone {
-            <<ValueObject>>
-            - String value
-        }
-
-        class Email {
-            <<ValueObject>>
-            - String value
-        }
 
         class Address {
             <<ValueObject>>
