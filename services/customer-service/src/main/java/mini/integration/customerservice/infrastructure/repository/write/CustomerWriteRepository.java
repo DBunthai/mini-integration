@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CustomerWriteRepo extends JpaRepository<Customer, UUID> {
+public interface CustomerWriteRepository extends JpaRepository<Customer, UUID> {
 
     boolean existsByContactEmail(String email);
     boolean existsByContactPhoneNumber(String phoneNumber);

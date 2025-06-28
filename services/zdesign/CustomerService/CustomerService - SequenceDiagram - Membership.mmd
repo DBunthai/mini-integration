@@ -1,0 +1,36 @@
+---
+title: Membership
+---
+sequenceDiagram
+    autonumber
+
+    participant nf as NotificationService
+    participant trxn as TransactionService
+    participant rb as Kafka
+    participant dbpl as DailyBalancedPostedListener
+    participant dbpch as DailyBalancePostedCommandHandler
+    participant csRepo as Repository
+    participant csDb as Postgres
+
+
+    trxn    -) rb: DAILY_BALANCE_POSTED
+    rb      -) dbpl: Recieved
+    dbpl    -) dbpl: create command
+    critical Write Process
+        dbpl    -) dbpch: handle( )
+        dbpch   -) csRepo: save( ) 
+        csRepo  -) csDb: Insert
+        dbpch    -) dbpch: Membership Evaluate
+        dbpch   -) rb: Sent MEMBERSHIP_LEVEL_UPDATED
+        dbpch   -) rb: commitSync( )
+        dbpch   -) nf: notificaiton regarding memberhip updated
+    option error retry 3 times
+        dbpl    -) dbpl: retry in [Wrte Process]
+    option if retry exhausted 3 times
+        dbpch   -) rb: Sent DLQ
+
+    end
+
+
+
+    

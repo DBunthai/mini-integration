@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CustomerReadRepo extends JpaReadOnlyRepository<Customer, UUID> {
+public interface CustomerReadRepository extends JpaReadOnlyRepository<Customer, UUID> {
 }

@@ -1,12 +1,8 @@
 package mini.integration.customerservice.lib;
 
-import mini.integration.customerservice.domain.Address;
-import mini.integration.customerservice.domain.Contact;
 import mini.integration.customerservice.domain.Customer;
-import mini.integration.customerservice.domain.enumtype.Gender;
-import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepo;
-import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepo;
-import mini.integration.customerservice.lib.util.FakerLib;
+import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepository;
+import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepository;
 import mini.integration.customerservice.util.UtilTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +14,10 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 public class TestJPA {
 
     @Autowired
-    CustomerWriteRepo customerWriteRepo;
+    CustomerWriteRepository customerWriteRepo;
 
     @Autowired
-    CustomerReadRepo customerReadRepo;
+    CustomerReadRepository customerReadRepo;
 
     @Test
     public void TestJPA_Read_Write() {

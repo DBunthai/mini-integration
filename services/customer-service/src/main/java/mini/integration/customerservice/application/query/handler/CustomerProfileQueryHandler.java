@@ -6,7 +6,7 @@ import mini.integration.customerservice.application.query.mapper.CustomerQueryMa
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.exception.ResourceNotFoundException;
 import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
-import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepo;
+import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepository;
 import mini.integration.customerservice.lib.QueryHandler;
 import mini.integration.customerservice.lib.exception.GeneralException;
 import org.springframework.stereotype.Component;
@@ -18,10 +18,10 @@ import java.util.UUID;
 public class CustomerProfileQueryHandler implements QueryHandler<CustomerProfileQuery, CustomerProfileDTO> {
 
 
-    private final CustomerReadRepo customerReadRepo;
+    private final CustomerReadRepository customerReadRepo;
     private final CustomerQueryMapper customerQueryMapper;
 
-    public CustomerProfileQueryHandler(CustomerReadRepo customerReadRepo, CustomerQueryMapper customerQueryMapper) {
+    public CustomerProfileQueryHandler(CustomerReadRepository customerReadRepo, CustomerQueryMapper customerQueryMapper) {
         this.customerReadRepo = customerReadRepo;
         this.customerQueryMapper = customerQueryMapper;
     }

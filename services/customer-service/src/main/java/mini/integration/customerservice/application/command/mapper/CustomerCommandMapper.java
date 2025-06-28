@@ -1,11 +1,15 @@
 package mini.integration.customerservice.application.command.mapper;
 
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
+import mini.integration.customerservice.application.command.PostedBalanceCommand;
 import mini.integration.customerservice.domain.Customer;
+import mini.integration.customerservice.domain.PostedBalance;
+import mini.integration.customerservice.domain.event.BalancePostedEvent;
 import mini.integration.customerservice.domain.event.CustomerProfileEditedEvent;
 import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
 import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
+import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.lib.MapperResolver;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -45,4 +49,18 @@ public interface CustomerCommandMapper {
     @Mapping(target = "phoneNumber", source = "contact.phoneNumber")
     CustomerProfileEditedEvent customerToCustomerProfileEditedEvent(Customer customer);
 
+    @Mapping(target = "customer.id", source = "customerId")
+    @Mapping(target = "postedAmount", source = "postedAmount")
+    @Mapping(target = "registeredDate", source = "registeredDate")
+    PostedBalance postedBalanceCommandToPostedBalance(PostedBalanceCommand command);
+
+    @Mapping(target = "customerId", source = "customerId")
+    @Mapping(target = "postedAmount", source = "postedAmount")
+    @Mapping(target = "registeredDate", source = "registeredDate")
+    PostedBalanceCommand balancePostedEventToPostedBalance(BalancePostedEvent event);
+
+    @Mapping(target = "customerId", source = "customer.id")
+    @Mapping(target = "postedAmount", source = "postedAmount")
+    @Mapping(target = "registeredDate", source = "registeredDate")
+    PostedBalanceDTO postedBalanceToPostedBalanceDTO(PostedBalance postedBalance);
 }

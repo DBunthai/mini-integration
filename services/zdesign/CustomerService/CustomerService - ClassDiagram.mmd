@@ -1,7 +1,10 @@
 classDiagram
+
     EntityBased <|-- Customer 
     Customer --> Contact
     Customer --> Address
+    Customer ..> MemberShipPolicy
+    Customer "1" --> "1" DailyPostedBalance
     Customer "1" --> "*" FileInfo
     
     CustomerDAO --> Customer
@@ -27,6 +30,37 @@ classDiagram
             - String lastModifiedBy
         }
 
+        class MemberShipType {
+            <<Enum>>
+            BRONZE,
+            SILIVER,
+            GOLD,
+            PLATINUM
+
+        }
+
+        class MemberShipPolicy {         
+            - MemberShipType: MemberShipType
+            - requiredBalance: BigDecimal
+            - requiredLoyaltyYear: int
+            - List<MembershipPolicy> memberShipPolicies = List.of(
+                 MembershipPolicy[BRONZE, BigDecimal.ZERO, 0],
+                 MembershipPolicy[SILVER,  "10000", 2],
+                 MembershipPolicy[GOLD,  "20000", 5],
+                 MembershipPolicy[PLATINUM,  "50000", 8]
+            );
+
+            - evaluateMemberShip(postedBalance: BigDecimal, registedDate: OffsetDateTime): MemberShipLevel
+        }
+
+        class DailyPostedBalance {
+            <<ValueObject>>
+            - customer: Customer
+            - dailyPostedBalance: BigDecimal
+            - registeredDate: OffsetDateTime
+        }
+
+
         class Customer {
             <<Entity>>
 
@@ -37,6 +71,12 @@ classDiagram
             - Contact contact
             - Address address
             - Set<FileInfo> fileInfo
+            - DailyPostedBalance dailyPostedBalance;
+            
+
+            evaluateMemberShip(): void
+
+
         }
 
         class Contact {

@@ -13,7 +13,7 @@ sequenceDiagram
     participant csServ as CommandService
     participant csRepo as Repository
     participant csDb as Postgres
-    participant rb as RabbitMQ
+    participant rb as Kafka
     participant nf as NotificationService
 
     c -) api: POST: {domain}/api/v1/customer/register <br> Upload Files

@@ -11,16 +11,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import mini.integration.customerservice.domain.enumtype.Gender;
 import mini.integration.customerservice.lib.EntityBased;
 
 
+@Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Entity
 public class Customer extends EntityBased {
 
     @Column(nullable = false)
@@ -41,6 +42,4 @@ public class Customer extends EntityBased {
 
     private String description;
 
-
-//    private  Set<FileInfo> fileInfos;
 }

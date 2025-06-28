@@ -9,7 +9,7 @@ import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.enumtype.Gender;
 import mini.integration.customerservice.domain.event.CustomerProfileEditedEvent;
 import mini.integration.customerservice.exception.ResourceNotFoundException;
-import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepo;
+import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepository;
 import mini.integration.customerservice.lib.CommandHandler;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -25,11 +25,11 @@ import static java.util.Objects.nonNull;
 public class CustomerProfileEditCommandHandler implements CommandHandler<CustomerProfileEditCommand, Optional<Void>> {
 
 
-    private final CustomerWriteRepo customerWriteRepo;
+    private final CustomerWriteRepository customerWriteRepo;
     private final CustomerCommandMapper customerCommandMapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public CustomerProfileEditCommandHandler(CustomerWriteRepo customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
+    public CustomerProfileEditCommandHandler(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
         this.customerWriteRepo = customerWriteRepo;
         this.customerCommandMapper = customerCommandMapper;
         this.eventPublisher = eventPublisher;
