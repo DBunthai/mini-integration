@@ -38,11 +38,11 @@ public class CustomerControllerTest {
         CustomerRegisterDTO registerDTO = customerController.register(registerCommand).getBody();
 
         var editProfileCommand = CustomerProfileEditCommand.builder()
-            .id(registerDTO.getId())
+            .id(registerDTO.getId().toString())
             .firstName(Optional.of("Sasa")).build();
         customerController.edit(editProfileCommand);
 
-        CustomerProfileDTO customerProfileDTO = customerQueryController.getProfile(registerDTO.getId()).getBody();
+        CustomerProfileDTO customerProfileDTO = customerQueryController.getProfile(registerDTO.getId().toString()).getBody();
 
         assertThat(customerProfileDTO.getLastName())
             .as("Last name should match updated data")

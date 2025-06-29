@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import mini.integration.customerservice.domain.enumtype.Gender;
+
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -14,10 +17,10 @@ import lombok.ToString;
 @ToString
 public class CustomerProfileDTO {
 
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
-    private String gender;
+    private Gender gender;
     private String description;
 
     private ContactDTO contact;

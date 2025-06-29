@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -14,6 +17,6 @@ import lombok.ToString;
 @ToString
 public class CustomerRegisterDTO {
 
-    private String id;
-    private String createdDate;
+    private UUID id;
+    private OffsetDateTime createdDate;
 }
