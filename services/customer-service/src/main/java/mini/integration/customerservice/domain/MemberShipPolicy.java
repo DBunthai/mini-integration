@@ -19,21 +19,21 @@ import java.util.Set;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberShipPolicy {
 
-    public static final int NEWCOMER_YEAR = 0;
-    public static final int REGULAR_YEAR = 2;
-    public static final int PATRON_YEAR = 5;
-    public static final int LEGACY_YEAR = 8;
+    private static final int NEWCOMER_YEAR = 0;
+    private static final int REGULAR_YEAR = 2;
+    private static final int PATRON_YEAR = 5;
+    private static final int LEGACY_YEAR = 8;
 
-    public static final BigDecimal NEWCOMER_BALANCE = BigDecimal.valueOf(0);
-    public static final BigDecimal REGULAR_BALANCE = BigDecimal.valueOf(10000);
-    public static final BigDecimal PATRON_BALANCE = BigDecimal.valueOf(20000);
-    public static final BigDecimal LEGACY_BALANCE = BigDecimal.valueOf(50000);
+    private static final BigDecimal NEWCOMER_BALANCE = BigDecimal.valueOf(0);
+    private static final BigDecimal REGULAR_BALANCE = BigDecimal.valueOf(10000);
+    private static final BigDecimal PATRON_BALANCE = BigDecimal.valueOf(20000);
+    private static final BigDecimal LEGACY_BALANCE = BigDecimal.valueOf(50000);
 
     private MemberShipType memberShipType;
     private BigDecimal requiredPostedBalanced;
     private int requiredLoyaltyYear;
 
-    public static Set<MemberShipPolicy> POLICIES = Set.of(
+    private static Set<MemberShipPolicy> POLICIES = Set.of(
         MemberShipPolicy.builder()
             .memberShipType(MemberShipType.BRONZE)
             .requiredPostedBalanced(NEWCOMER_BALANCE)
@@ -60,11 +60,14 @@ public class MemberShipPolicy {
     );
 
     public static MemberShipType getMemberShip(BigDecimal postedBalance, OffsetDateTime registeredDate) {
+        long loyaltyDuration = ChronoUnit.YEARS.between(OffsetDateTime.now(), registeredDate);
         return MemberShipPolicy.POLICIES.stream().filter(policy -> {
-                long loyaltyDuration = ChronoUnit.YEARS.between(OffsetDateTime.now(), registeredDate);
-                return policy.getRequiredPostedBalanced().compareTo(postedBalance) >= 0 ||
-                    loyaltyDuration <= policy.getRequiredLoyaltyYear();
-            }).max(Comparator.comparing(MemberShipPolicy::getMemberShipType))
+
+                    boolean i = policy.getRequiredPostedBalanced().compareTo(postedBalance) <= 0 ||
+                        loyaltyDuration >= policy.getRequiredLoyaltyYear();
+                    return i;
+                }
+            ).max(Comparator.comparing(MemberShipPolicy::getRequiredPostedBalanced))
             .map(MemberShipPolicy::getMemberShipType)
             .orElse(MemberShipType.BRONZE);
 

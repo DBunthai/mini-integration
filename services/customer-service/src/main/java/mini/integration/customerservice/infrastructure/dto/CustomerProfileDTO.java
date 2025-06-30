@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import mini.integration.customerservice.domain.enumtype.Gender;
+import mini.integration.customerservice.domain.enumtype.MemberShipType;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
@@ -26,7 +28,10 @@ public class CustomerProfileDTO {
     private ContactDTO contact;
     private AddressDTO address;
 
-    private String createdDate;
+    private OffsetDateTime createdDate;
+
+    private MemberShipType memberShip;
+
 
     @Getter
     @Builder

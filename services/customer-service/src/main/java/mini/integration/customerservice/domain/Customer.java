@@ -5,14 +5,15 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import mini.integration.customerservice.domain.enumtype.Gender;
+import mini.integration.customerservice.domain.enumtype.MemberShipType;
 import mini.integration.customerservice.lib.EntityBased;
 
 
@@ -40,6 +41,9 @@ public class Customer extends EntityBased {
     @Embedded
     private Address address;
 
+
     private String description;
 
+    @Transient
+    MemberShipType memberShip;
 }

@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 
 @SpringBootTest
@@ -48,7 +49,7 @@ public class PostedBalanceHandlerTest {
         BalancePostedEvent balancePostedEvent =
             BalancePostedEvent.builder()
                 .customerId(registerDTO.getId())
-                .postedAmount(BigDecimal.valueOf(25000, 4))
+                .postedAmount(BigDecimal.valueOf(250000).setScale(4, RoundingMode.UNNECESSARY))
                 .registeredDate(OffsetDateTime.now().minusYears(1))
                 .build();
         System.out.println(balancePostedEvent);
