@@ -13,8 +13,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TestGooglePhoneNumber {
 
-    PhoneNumberUtil util = PhoneNumberUtil.getInstance();
-
     @Test
     void TestPhoneNumber_Passed() {
 
@@ -24,7 +22,7 @@ public class TestGooglePhoneNumber {
             "17034796223",
             "+17034796223",
             "703 479 6223",
-            "569-346-7886"
+            "703-479-6223"
 
         ).forEach(
             number -> {

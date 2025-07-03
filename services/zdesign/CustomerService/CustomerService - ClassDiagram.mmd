@@ -4,7 +4,11 @@ classDiagram
     Customer --> Contact
     Customer --> Address
     Customer ..> MemberShipPolicy
-    Customer "1" --> "1" DailyPostedBalance
+    CustomerSetting "1" --> "1" Customer
+    CustomerSetting "1" --> "*" CustomerNotificationConfig
+    CustomerNotificationConfig "1" --> "1" NotificationConfig
+    NotificationConfig "1" --> "1" NotificationType
+
     Customer "1" --> "*" FileInfo
     
     CustomerDAO --> Customer
@@ -50,13 +54,13 @@ classDiagram
                  MembershipPolicy[PLATINUM,  "50000", 8]
             );
 
-            - evaluateMemberShip(postedBalance: BigDecimal, registedDate: OffsetDateTime): MemberShipLevel
+            - getMemberShip(postedBalance: BigDecimal, registedDate: OffsetDateTime): MemberShipLevel
         }
 
         class DailyPostedBalance {
             <<ValueObject>>
             - customer: Customer
-            - dailyPostedBalance: BigDecimal
+            - dailyPostedAmount: BigDecimal
             - registeredDate: OffsetDateTime
         }
 
@@ -70,14 +74,13 @@ classDiagram
             - String description
             - Contact contact
             - Address address
-            - Set<FileInfo> fileInfo
-            - DailyPostedBalance dailyPostedBalance;
-            
-
-            evaluateMemberShip(): void
+            - List<FileInfo> fileInfo
+            - memberShip MemberShipType @Transient
 
 
         }
+
+        
 
         class Contact {
             <<ValueObject>>
@@ -98,6 +101,58 @@ classDiagram
             <<Enum>>
             MALE
             FEMALE
+        }
+
+        class NotificationChannel {
+            <<Enum>>
+            Email,
+            SMS,
+            Device
+        }
+
+        class NotificationStatus {
+            <<Enum>>
+            ACTIVE,
+            INACTIVE
+        }
+
+        class CustomerNotificationConfig {
+            <<Entity>>
+            - customerSetting: CustomerSetting
+            - isEnabled: bool
+            - notificationConfig: NotificationConfig
+        }
+
+        class NotificationConfig {
+            <<Entity>>
+            - notificationType: NotificationType
+            - notificationChannel: NotificationChannel
+            - requiredEnable: bool (default false)
+            - defaultEnabled: bool (default true)
+            - description: String
+            - status: NotificationStatus (active / inaction only include in response when is active)
+        }
+
+        class NotificationType {
+            <<Entity>>
+            - name: String
+            - description: String
+            - status: NotificationStatus (active / inaction only include in response when is active)
+        }
+
+        class RegularPostedBalanced {
+            <<Enum>>
+            DAILY,
+            WEEKLY,
+            MONTHLY
+        }
+
+        class CustomerSetting {
+            <<ValueObject>>
+            - customer: Customer
+            - customerNotificationConfigs: List<CustomerNotificationConfig>
+            - regularPostedBalance: RegularPostedBalanced
+
         }
 
         class FileInfo {

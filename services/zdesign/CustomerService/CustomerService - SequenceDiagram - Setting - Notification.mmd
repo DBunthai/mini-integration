@@ -1,0 +1,30 @@
+---
+title: Customer Notification
+---
+sequenceDiagram
+
+    actor c as Customer
+    participant con as Upfront Layer    
+
+    participant cus as Customer
+    participant cusSetting as CustomerSetting
+    participant cusNotiConf as CustomerNotificationConfig
+    participant notiConf as NotificationConfig
+    participant noti as NotificationType 
+
+    c --) con: Request customer setting <br> POST: {domain}/api/v1/customers/{id}/setting/notification
+    con --) con: operate the following layers to get notification
+    con --) cus: create object
+    con --) cusSetting: create object
+    con --) cusNotiConf: create object
+    con --) notiConf: create object
+    con --) noti: create object
+    cusSetting --) cus: set a Customer
+    cusSetting --) cusNotiConf: set a CustomerNotificationConfig
+    cusNotiConf --) notiConf: set a NotificationConfig
+    notiConf --) noti: set a NotificationType
+
+    cusSetting --) con: return to operation
+    con --) con: covert to DTO
+    con --) c: response 
+
