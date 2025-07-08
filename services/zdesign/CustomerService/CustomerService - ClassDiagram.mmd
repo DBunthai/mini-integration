@@ -5,11 +5,11 @@ classDiagram
     Customer --> Address
     Customer ..> MemberShipPolicy
     CustomerSetting "1" --> "1" Customer
-    CustomerSetting "1" --> "*" CustomerNotificationConfig
-    CustomerNotificationConfig "1" --> "1" NotificationConfig
-    NotificationConfig "1" --> "1" NotificationType
+    CustomerSetting "1" --> "N" CustomerNotificationConfig
+    CustomerNotificationConfig "N" --> "1" NotificationConfig
+    NotificationConfig "N" --> "1" NotificationType
 
-    Customer "1" --> "*" FileInfo
+    Customer "1" --> "N" FileInfo
     
     CustomerDAO --> Customer
     FileInfoDAO --> FileInfo
