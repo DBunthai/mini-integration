@@ -1,6 +1,10 @@
 package mini.integration.customerservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
@@ -21,11 +25,13 @@ import java.util.Set;
 public class CustomerSetting extends EntityBased {
 
     @OneToOne
-    Customer customer;
+    private Customer customer;
 
-    @OneToMany
-    Set<CustomerNotificationConfig> customerNotificationConfigs;
+    @OneToMany(mappedBy = "customerSetting")
+    @JsonManagedReference
+    private Set<CustomerNotificationConfig> customerNotificationConfigs;
 
-    RegularPostedBalance regularPostedBalance;
+    @Enumerated(EnumType.STRING)
+    private RegularPostedBalance regularPostedBalance;
 
 }

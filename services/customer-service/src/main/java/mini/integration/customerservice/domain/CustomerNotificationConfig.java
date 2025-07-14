@@ -1,5 +1,6 @@
 package mini.integration.customerservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
@@ -21,10 +22,12 @@ import org.hibernate.annotations.FilterDef;
 public class CustomerNotificationConfig extends EntityBased {
 
     @ManyToOne
-    CustomerSetting customerSetting;
+    @JsonBackReference
+    private CustomerSetting customerSetting;
 
-    boolean isEnabled;
+    private boolean isEnabled;
 
     @ManyToOne
-    NotificationConfig notificationConfig;
+    @JsonBackReference
+    private NotificationConfig notificationConfig;
 }

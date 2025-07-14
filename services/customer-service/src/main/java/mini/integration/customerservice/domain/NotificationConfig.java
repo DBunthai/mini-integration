@@ -1,5 +1,6 @@
 package mini.integration.customerservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,6 +28,7 @@ import org.hibernate.annotations.FilterDef;
 public class NotificationConfig extends EntityBased {
 
     @ManyToOne
+    @JsonBackReference
     private NotificationType notificationType;
 
 
