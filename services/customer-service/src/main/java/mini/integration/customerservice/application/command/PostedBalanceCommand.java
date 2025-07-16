@@ -19,6 +19,7 @@ import java.time.OffsetDateTime;
 @ToString
 public class PostedBalanceCommand {
 
+    @NotNull(message = "Customer Id is required")
     @UUID(message = "Customer Id is incorrect format")
     private String customerId;
     private BigDecimal postedAmount;

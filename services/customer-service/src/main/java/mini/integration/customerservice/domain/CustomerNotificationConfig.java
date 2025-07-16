@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import mini.integration.customerservice.lib.EntityBased;
 import org.hibernate.annotations.Filter;
@@ -25,6 +26,7 @@ public class CustomerNotificationConfig extends EntityBased {
     @JsonBackReference
     private CustomerSetting customerSetting;
 
+    @Setter
     private boolean isEnabled;
 
     @ManyToOne

@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ import org.hibernate.annotations.FilterDef;
 @Filter(name = "NotificationConfigStatus", condition = "status = 'ACTIVE' && notificationType.status = 'ACTIVE'")
 public class NotificationConfig extends EntityBased {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private NotificationType notificationType;
 

@@ -7,7 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.UUID;
+
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -20,7 +21,7 @@ public class CustomerSettingNotificationQuery {
     @org.hibernate.validator.constraints.UUID(message = "Customer Id is incorrect format")
     private String customerId;
 
-    public java.util.UUID getCustomerId() {
+    public UUID getCustomerId() {
         return java.util.UUID.fromString(customerId);
     }
 
