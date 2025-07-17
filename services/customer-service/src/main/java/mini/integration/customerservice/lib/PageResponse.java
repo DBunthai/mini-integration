@@ -22,7 +22,7 @@ public class PageResponse {
     private boolean hasPrevious;
 
     private PageResponse(Page<?> page, Class<?> t) {
-        this.data = ObjectMapperLib.mapList(page.getContent(), t);
+        this.data = ObjectMapperLib.mapList(page.getContent(), t, ObjectMapperLib.ObjectMapperRule.UNRESTRICTED);
         this.size = page.getSize();
         this.page = page.getNumber();
         this.totalElement = page.getTotalElements();

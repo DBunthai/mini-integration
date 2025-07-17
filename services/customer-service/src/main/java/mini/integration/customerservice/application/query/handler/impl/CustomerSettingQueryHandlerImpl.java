@@ -25,12 +25,11 @@ public class CustomerSettingQueryHandlerImpl implements CustomerSettingQueryHand
     public CustomerSettingDTO handle(CustomerSettingQuery query) throws GeneralException {
 
 
-
         CustomerSetting customerSetting = customerSettingReadRepository
             .findCustomerSettingByCustomer_Id(query.getCustomerId())
             .orElseThrow(() -> new ResourceNotFoundException("Customer setting is not found"));
 
 
-        return ObjectMapperLib.mapObj(customerSetting, CustomerSettingDTO.class);
+        return ObjectMapperLib.mapObj(customerSetting, CustomerSettingDTO.class, ObjectMapperLib.ObjectMapperRule.UNRESTRICTED);
     }
 }

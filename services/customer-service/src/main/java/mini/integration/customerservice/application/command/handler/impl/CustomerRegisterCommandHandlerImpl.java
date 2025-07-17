@@ -1,5 +1,6 @@
 package mini.integration.customerservice.application.command.handler.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
 import mini.integration.customerservice.application.command.handler.CustomerRegisterCommandHandler;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
+@Transactional
 public class CustomerRegisterCommandHandlerImpl implements CustomerRegisterCommandHandler {
 
 

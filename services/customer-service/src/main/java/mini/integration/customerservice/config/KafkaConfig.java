@@ -14,7 +14,7 @@ public class KafkaConfig implements DefaultKafkaProducerFactoryCustomizer, Defau
 
     @Override
     public void customize(DefaultKafkaProducerFactory<?, ?> producerFactory) {
-        producerFactory.setValueSerializer(new JsonSerializer<>(ObjectMapperLib.objectMapper()));
+        producerFactory.setValueSerializer(new JsonSerializer<>(ObjectMapperLib.objectMapper(ObjectMapperLib.ObjectMapperRule.RESTRICTED)));
     }
 
 

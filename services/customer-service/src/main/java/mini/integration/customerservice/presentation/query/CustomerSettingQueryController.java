@@ -2,7 +2,6 @@ package mini.integration.customerservice.presentation.query;
 
 import mini.integration.customerservice.application.query.CustomerSettingNotificationQuery;
 import mini.integration.customerservice.application.query.CustomerSettingQuery;
-import mini.integration.customerservice.infrastructure.dto.CustomerSettingDTO;
 import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotificationDTO;
 import mini.integration.customerservice.infrastructure.querybus.QueryBus;
 import mini.integration.customerservice.lib.PageResponse;

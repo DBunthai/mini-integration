@@ -7,7 +7,6 @@ import mini.integration.customerservice.application.command.mapper.CustomerComma
 import mini.integration.customerservice.domain.PostedBalance;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.infrastructure.repository.write.PostedBalanceRepository;
-import mini.integration.customerservice.lib.CommandHandler;
 import org.springframework.stereotype.Component;
 
 @Component

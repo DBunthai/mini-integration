@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 import mini.integration.customerservice.lib.DomainEvent;
 import mini.integration.customerservice.lib.util.ObjectMapperLib;
 
