@@ -1,0 +1,10 @@
+package mini.integration.customerservice.application.command.handler;
+
+import mini.integration.customerservice.application.command.CustomerNotificationChannelConfigCommand;
+import mini.integration.customerservice.infrastructure.dto.CustomerNotificationChannelConfigDTO;
+import mini.integration.customerservice.lib.CommandHandler;
+
+import java.util.Optional;
+
+public interface CustomerNotificationConfigCommandHandler extends CommandHandler<CustomerNotificationChannelConfigCommand, CustomerNotificationChannelConfigDTO> {
+}

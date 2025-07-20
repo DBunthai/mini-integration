@@ -2,34 +2,35 @@ package mini.integration.customerservice.application.command.handler.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
-import mini.integration.customerservice.application.command.CustomerNotificationConfigCommand;
-import mini.integration.customerservice.application.command.handler.CustomerNotificationConfigCommandHandler;
+import mini.integration.customerservice.application.command.CustomerNotificationChannelConfigCommand;
+import mini.integration.customerservice.application.command.handler.CustomerNotificationChannelConfigCommandHandler;
 import mini.integration.customerservice.domain.CustomerNotificationConfig;
+import mini.integration.customerservice.infrastructure.dto.CustomerNotificationChannelConfigDTO;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerNotificationConfigRepository;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerSettingRepository;
 import mini.integration.customerservice.infrastructure.repository.write.NotificationConfigRepository;
 import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.customerservice.lib.util.ObjectMapperLib;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 @Log4j2
 @Transactional
-public class CustomerNotificationConfigCommandHandlerImpl implements CustomerNotificationConfigCommandHandler {
+public class CustomerNotificationChannelChannelConfigCommandHandlerImpl implements CustomerNotificationChannelConfigCommandHandler {
 
     private final CustomerNotificationConfigRepository customerNotificationConfigRepository;
     private final CustomerSettingRepository customerSettingRepository;
     private final NotificationConfigRepository notificationConfigRepository;
 
-    public CustomerNotificationConfigCommandHandlerImpl(CustomerNotificationConfigRepository customerNotificationConfigRepository, CustomerSettingRepository customerSettingRepository, NotificationConfigRepository notificationConfigRepository1) {
+    public CustomerNotificationChannelChannelConfigCommandHandlerImpl(CustomerNotificationConfigRepository customerNotificationConfigRepository, CustomerSettingRepository customerSettingRepository, NotificationConfigRepository notificationConfigRepository) {
         this.customerNotificationConfigRepository = customerNotificationConfigRepository;
         this.customerSettingRepository = customerSettingRepository;
-        this.notificationConfigRepository = notificationConfigRepository1;
+        this.notificationConfigRepository = notificationConfigRepository;
     }
 
+
     @Override
-    public Optional<Void> handle(CustomerNotificationConfigCommand command) throws GeneralException {
+    public CustomerNotificationChannelConfigDTO handle(CustomerNotificationChannelConfigCommand command) throws GeneralException {
 
 
         var notificationConfig = notificationConfigRepository.findById(command.getCustomerNotificationConfigId())
@@ -55,19 +56,19 @@ public class CustomerNotificationConfigCommandHandlerImpl implements CustomerNot
 
         customerNotificationConfig.setEnabled(command.isEnabled());
         var savedCustomerNotificationConfig = customerNotificationConfigRepository.save(customerNotificationConfig);
-        log.info("""
-                                
-                Save Customer Notification Config
-                    Customer: {},
-                    NotificationType: {}
-                    Channel: {},
-                    isEnabled To: {}
-                """,
-            savedCustomerNotificationConfig.getCustomerSetting().getCustomer().getId(),
-            savedCustomerNotificationConfig.getNotificationConfig().getNotificationType().getName(),
-            savedCustomerNotificationConfig.getNotificationConfig().getNotificationChannel(),
-            savedCustomerNotificationConfig.isEnabled());
+//        log.info("""
+//
+//                Save Customer Notification Config
+//                    Customer: {},
+//                    NotificationType: {}
+//                    Channel: {},
+//                    isEnabled To: {}
+//                """,
+//            savedCustomerNotificationConfig.getCustomerSetting().getCustomer().getId(),
+//            savedCustomerNotificationConfig.getNotificationConfig().getNotificationType().getName(),
+//            savedCustomerNotificationConfig.getNotificationConfig().getNotificationChannel(),
+//            savedCustomerNotificationConfig.isEnabled());
 
-        return Optional.empty();
+        return ObjectMapperLib.mapObj(savedCustomerNotificationConfig, CustomerNotificationChannelConfigDTO.class, ObjectMapperLib.ObjectMapperRule.UNRESTRICTED);
     }
 }
