@@ -21,7 +21,7 @@ import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 
 @SpringBootTest
-public class PostedBalanceHandlerTest {
+public class PostedBalanceCommandHandlerTest {
 
     @Autowired
     CommandBus commandBus;

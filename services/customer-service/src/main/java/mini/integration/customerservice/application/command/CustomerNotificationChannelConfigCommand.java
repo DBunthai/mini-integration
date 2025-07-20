@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import mini.integration.customerservice.domain.enumtype.NotificationChannel;
 
 import java.util.UUID;
 
@@ -17,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-public class CustomerNotificationConfigCommand {
+public class CustomerNotificationChannelConfigCommand {
 
     @org.hibernate.validator.constraints.UUID(message = "Customer Notification Config Id is incorrect format")
     private String customerNotificationConfigId;

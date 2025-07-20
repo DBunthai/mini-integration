@@ -3,6 +3,8 @@ title: Customer Notification Fetch
 ---
 sequenceDiagram
 
+    autonumber
+    
     actor c as Customer
     participant con as Upfront Layer    
 
@@ -12,7 +14,7 @@ sequenceDiagram
     participant notiConf as NotificationConfig
     participant noti as NotificationType 
 
-    c --) con: Request customer setting <br> POST: {domain}/api/v1/customers/{id}/setting/notification
+    c --) con: Request customer setting <br> GET: {domain}/api/v1/customer/{{customerRegisteredId}}/setting/notification
     con --) con: operate the following layers to get notification
     con --) cus: create object
     con --) cusSetting: create object

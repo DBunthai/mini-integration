@@ -4,7 +4,5 @@ import mini.integration.customerservice.application.command.CustomerNotification
 import mini.integration.customerservice.infrastructure.dto.CustomerNotificationChannelConfigDTO;
 import mini.integration.customerservice.lib.CommandHandler;
 
-import java.util.Optional;
-
-public interface CustomerNotificationConfigCommandHandler extends CommandHandler<CustomerNotificationChannelConfigCommand, CustomerNotificationChannelConfigDTO> {
+public interface CustomerNotificationChannelConfigCommandHandler extends CommandHandler<CustomerNotificationChannelConfigCommand, CustomerNotificationChannelConfigDTO> {
 }

@@ -1,0 +1,32 @@
+---
+title: Customer Notification Edit
+---
+sequenceDiagram
+
+    autonumber
+
+    Note left of c: { "isEnabled": true }
+    actor c as Customer
+    participant up as Upfront Layer
+    participant ccont as CustomerController 
+    participant ccmd as CustomerCommandHandlerImp
+    participant crepo as CustomerRepository
+
+
+
+
+
+    c -) up: Request customer setting <br> POST: {domain}/api/v1/customer/{{customerRegisteredId}}/setting/<br>notification/{notificaitonConfigId}/channel-config
+    up -) ccont: request to controller
+    ccont -) ccmd: request to command
+    ccmd -) ccmd: get customer setting
+    ccmd -) ccmd: get notification configs
+    ccmd -) ccmd: check if the there is <br> current customer notification channel config
+    ccmd -) ccmd: if yes update else insert new
+    ccmd -) crepo: save object
+    ccmd --) ccont: Config DTO
+    ccont --) up: 200 OK
+    up --) c: 200 OK
+
+
+

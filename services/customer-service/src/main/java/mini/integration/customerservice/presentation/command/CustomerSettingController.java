@@ -1,7 +1,7 @@
 package mini.integration.customerservice.presentation.command;
 
 import jakarta.validation.Valid;
-import mini.integration.customerservice.application.command.CustomerNotificationConfigCommand;
+import mini.integration.customerservice.application.command.CustomerNotificationChannelConfigCommand;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
 import mini.integration.customerservice.lib.exception.GeneralException;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +21,14 @@ public class CustomerSettingController {
         this.commandBus = commandBus;
     }
 
-    @PatchMapping("/notification-config/{notificationConfigId}")
+    @PatchMapping("/notification/{notificationConfigId}/channel-config")
     public ResponseEntity<?> patchCustomerNotificationConfig(
         @PathVariable("customerId") String customerId,
         @PathVariable("notificationConfigId") String notificationConfigId,
-        @RequestBody @Valid CustomerNotificationConfigCommand command) throws GeneralException {
+        @RequestBody @Valid CustomerNotificationChannelConfigCommand command) throws GeneralException {
 
         commandBus.dispatch(
-            CustomerNotificationConfigCommand.builder()
+            CustomerNotificationChannelConfigCommand.builder()
                 .customerId(customerId)
                 .customerNotificationConfigId(notificationConfigId)
                 .enabled(command.isEnabled())

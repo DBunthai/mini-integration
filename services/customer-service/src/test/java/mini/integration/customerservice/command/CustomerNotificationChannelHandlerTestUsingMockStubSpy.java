@@ -1,13 +1,13 @@
 package mini.integration.customerservice.command;
 
 import mini.integration.customerservice.application.command.CustomerNotificationChannelConfigCommand;
-import mini.integration.customerservice.application.command.handler.impl.CustomerNotificationChannelChannelConfigCommandHandlerImpl;
+import mini.integration.customerservice.application.command.handler.impl.CustomerNotificationChannelConfigCommandHandlerImpl;
+import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.CustomerNotificationConfig;
 import mini.integration.customerservice.domain.CustomerSetting;
 import mini.integration.customerservice.domain.NotificationConfig;
 import mini.integration.customerservice.domain.NotificationType;
 import mini.integration.customerservice.domain.enumtype.NotificationChannel;
-import mini.integration.customerservice.infrastructure.dto.CustomerNotificationChannelConfigDTO;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerNotificationConfigRepository;
 import mini.integration.customerservice.infrastructure.repository.write.NotificationConfigRepository;
 import mini.integration.customerservice.lib.exception.GeneralException;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class CustomerNotificationChannelHandlerTest {
+class CustomerNotificationChannelHandlerTestUsingMockStubSpy {
 
 
     @Mock
@@ -39,7 +39,7 @@ class CustomerNotificationChannelHandlerTest {
 
     @InjectMocks
     @Spy // 👈 this makes the handler a spy
-    CustomerNotificationChannelChannelConfigCommandHandlerImpl handler;
+    CustomerNotificationChannelConfigCommandHandlerImpl handler;
 
     @Test
     void testHandle_spy() throws GeneralException {
@@ -58,7 +58,6 @@ class CustomerNotificationChannelHandlerTest {
             .defaultEnable(false)
             .build();
 
-//
         var notificationConfigSpy = notificationConfig;
         when(notificationConfigRepo.findById(configId)).thenReturn(Mockito.spy(Optional.of(notificationConfigSpy)));
 
@@ -66,7 +65,9 @@ class CustomerNotificationChannelHandlerTest {
             .thenReturn(Mockito.spy(Optional.of(
                 CustomerNotificationConfig.builder()
                     .id(UUID.randomUUID())
-                    .customerSetting(CustomerSetting.builder().build())
+                    .customerSetting(CustomerSetting.builder()
+                        .customer(Customer.builder().id(customerId).build())
+                        .build())
                     .notificationConfig(notificationConfig)
                     .isEnabled(false)
                     .build()

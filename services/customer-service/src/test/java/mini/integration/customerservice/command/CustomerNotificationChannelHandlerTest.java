@@ -1,90 +1,79 @@
 package mini.integration.customerservice.command;
 
 import mini.integration.customerservice.application.command.CustomerNotificationChannelConfigCommand;
-import mini.integration.customerservice.application.command.handler.impl.CustomerNotificationChannelChannelConfigCommandHandlerImpl;
-import mini.integration.customerservice.domain.CustomerNotificationConfig;
-import mini.integration.customerservice.domain.CustomerSetting;
-import mini.integration.customerservice.domain.NotificationConfig;
-import mini.integration.customerservice.domain.NotificationType;
-import mini.integration.customerservice.domain.enumtype.NotificationChannel;
-import mini.integration.customerservice.infrastructure.repository.write.CustomerNotificationConfigRepository;
-import mini.integration.customerservice.infrastructure.repository.write.NotificationConfigRepository;
+import mini.integration.customerservice.application.command.CustomerRegisterCommand;
+import mini.integration.customerservice.application.command.handler.CustomerNotificationChannelConfigCommandHandler;
+import mini.integration.customerservice.application.command.handler.CustomerRegisterCommandHandler;
+import mini.integration.customerservice.application.command.mapper.CustomerCommandMapper;
+import mini.integration.customerservice.application.query.CustomerSettingNotificationQuery;
+import mini.integration.customerservice.application.query.handler.impl.CustomerSettingNotificationQueryHandlerImpl;
+import mini.integration.customerservice.domain.Customer;
+import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
+import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotificationDTO;
 import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.customerservice.util.UtilTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 
-@ExtendWith(MockitoExtension.class)
-class CustomerNotificationChannelHandlerTestUsingMockStubSpy {
+import static org.assertj.core.api.Assertions.*;
 
 
-    @Mock
-    CustomerNotificationConfigRepository customerNotificationConfigRepository;
+@SpringBootTest
+class CustomerNotificationChannelHandlerTest {
 
+    @Autowired
+    CustomerNotificationChannelConfigCommandHandler customerNotificationChannelConfigCommandHandler;
 
-    @Mock
-    NotificationConfigRepository notificationConfigRepo;
+    @Autowired
+    CustomerSettingNotificationQueryHandlerImpl customerSettingNotificationQueryHandler;
 
-    @InjectMocks
-    @Spy // 👈 this makes the handler a spy
-    CustomerNotificationChannelChannelConfigCommandHandlerImpl handler;
+    @Autowired
+    CustomerCommandMapper mapper;
+
+    @Autowired
+    CustomerRegisterCommandHandler customerRegisterCommandHandler;
 
     @Test
-    void testHandle_spy() throws GeneralException {
-        // Arrange mocks as usual
-        UUID customerId = UUID.randomUUID();
-        UUID configId = UUID.randomUUID();
+    void testCreateAndUpdateCustomerNotificationChannelConfigHandle() throws GeneralException {
 
 
-        NotificationType type = NotificationType.builder().name("Welcome").build();
-        NotificationChannel channel = NotificationChannel.EMAIL;
-
-        NotificationConfig notificationConfig = NotificationConfig.builder()
-            .id(configId)
-            .notificationChannel(channel)
-            .notificationType(type)
-            .defaultEnable(false)
-            .build();
-
-//
-        var notificationConfigSpy = notificationConfig;
-        when(notificationConfigRepo.findById(configId)).thenReturn(Mockito.spy(Optional.of(notificationConfigSpy)));
-
-        when(customerNotificationConfigRepository.findCustomerNotificationConfig(any(), any(), any()))
-            .thenReturn(Mockito.spy(Optional.of(
-                CustomerNotificationConfig.builder()
-                    .id(UUID.randomUUID())
-                    .customerSetting(CustomerSetting.builder().build())
-                    .notificationConfig(notificationConfig)
-                    .isEnabled(false)
-                    .build()
-            )));
+        Customer customerData = UtilTest.create();
+        CustomerRegisterCommand registerCommand = mapper.customerToRegisterCommand(customerData);
+        CustomerRegisterDTO registerDTO = customerRegisterCommandHandler.handle(registerCommand);
 
 
+        var customerSettingNotification = customerSettingNotificationQueryHandler.handle(
+            CustomerSettingNotificationQuery.builder()
+                .customerId(registerDTO.getId().toString())
+                .build()
+
+        );
+
+        CustomerSettingNotificationDTO.CustomerNotificationConfigDTO notificationConfig =
+            customerSettingNotification.getContent().get(0).getNotificationConfigs().get(0);
+
+
+        // Create new config
         var command = CustomerNotificationChannelConfigCommand.builder()
-            .customerId(customerId.toString())
-            .customerNotificationConfigId(configId.toString())
+            .customerId(registerDTO.getId().toString())
+            .customerNotificationConfigId(notificationConfig.getId().toString())
+            .enabled(false)
+            .build();
+        var result = customerNotificationChannelConfigCommandHandler.handle(command);
+        assertThat(result.isEnabled()).isFalse();
+
+
+        // Update config
+        command = CustomerNotificationChannelConfigCommand.builder()
+            .customerId(registerDTO.getId().toString())
+            .customerNotificationConfigId(notificationConfig.getId().toString())
             .enabled(true)
             .build();
+        var result2 = customerNotificationChannelConfigCommandHandler.handle(command);
+        assertThat(result2.isEnabled()).isTrue();
 
-        when(customerNotificationConfigRepository.save(any()))
-            .thenAnswer(invocation -> invocation.getArgument(0));
-
-        // Act
-        var result = handler.handle(command);
-
-        System.out.println(result.isEnabled());
     }
 }
 

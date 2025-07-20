@@ -12,6 +12,8 @@ sequenceDiagram
     participant csServ as CommandService
     participant csRepo as Repository
     participant csDb as Postgres
+    participant event as DomainEvent
+    participant csetting as CustomerSettingController
     participant rb as Kafka
     participant nf as NotificationService
 
@@ -31,8 +33,11 @@ sequenceDiagram
     csRepo -> csRepo: domain validate
 
     csRepo -) csDb: Save data
-
-    csServ -) rb: publish CustomerEdited event
+    
+    csServ -)+ event: publish CustomerEdited event
+    event -) csetting: publish to customer setting controller
+    csetting -) csetting: create customer setting
+    event -) -rb: pulish to Kafka
     csCont --) api: HTTP Status 201
     api --) c: recieved HTTP Status 201
 

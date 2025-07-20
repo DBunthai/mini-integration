@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-public class CustomerSettingHandlerTest {
+public class CustomerSettingCommandHandlerTest {
 
     @Autowired
     CustomerSettingAddCommandHandler customerSettingAddCommandHandler;

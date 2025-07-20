@@ -10,19 +10,18 @@ import mini.integration.customerservice.infrastructure.repository.write.Customer
 import mini.integration.customerservice.infrastructure.repository.write.CustomerSettingRepository;
 import mini.integration.customerservice.infrastructure.repository.write.NotificationConfigRepository;
 import mini.integration.customerservice.lib.exception.GeneralException;
-import mini.integration.customerservice.lib.util.ObjectMapperLib;
 import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
 @Transactional
-public class CustomerNotificationChannelChannelConfigCommandHandlerImpl implements CustomerNotificationChannelConfigCommandHandler {
+public class CustomerNotificationChannelConfigCommandHandlerImpl implements CustomerNotificationChannelConfigCommandHandler {
 
     private final CustomerNotificationConfigRepository customerNotificationConfigRepository;
     private final CustomerSettingRepository customerSettingRepository;
     private final NotificationConfigRepository notificationConfigRepository;
 
-    public CustomerNotificationChannelChannelConfigCommandHandlerImpl(CustomerNotificationConfigRepository customerNotificationConfigRepository, CustomerSettingRepository customerSettingRepository, NotificationConfigRepository notificationConfigRepository) {
+    public CustomerNotificationChannelConfigCommandHandlerImpl(CustomerNotificationConfigRepository customerNotificationConfigRepository, CustomerSettingRepository customerSettingRepository, NotificationConfigRepository notificationConfigRepository) {
         this.customerNotificationConfigRepository = customerNotificationConfigRepository;
         this.customerSettingRepository = customerSettingRepository;
         this.notificationConfigRepository = notificationConfigRepository;
@@ -56,19 +55,24 @@ public class CustomerNotificationChannelChannelConfigCommandHandlerImpl implemen
 
         customerNotificationConfig.setEnabled(command.isEnabled());
         var savedCustomerNotificationConfig = customerNotificationConfigRepository.save(customerNotificationConfig);
-//        log.info("""
-//
-//                Save Customer Notification Config
-//                    Customer: {},
-//                    NotificationType: {}
-//                    Channel: {},
-//                    isEnabled To: {}
-//                """,
-//            savedCustomerNotificationConfig.getCustomerSetting().getCustomer().getId(),
-//            savedCustomerNotificationConfig.getNotificationConfig().getNotificationType().getName(),
-//            savedCustomerNotificationConfig.getNotificationConfig().getNotificationChannel(),
-//            savedCustomerNotificationConfig.isEnabled());
+        log.info("""
 
-        return ObjectMapperLib.mapObj(savedCustomerNotificationConfig, CustomerNotificationChannelConfigDTO.class, ObjectMapperLib.ObjectMapperRule.UNRESTRICTED);
+                Save Customer Notification Config
+                    Customer: {},
+                    NotificationType: {}
+                    Channel: {},
+                    isEnabled To: {}
+                """,
+            savedCustomerNotificationConfig.getCustomerSetting().getCustomer().getId(),
+            savedCustomerNotificationConfig.getNotificationConfig().getNotificationType().getName(),
+            savedCustomerNotificationConfig.getNotificationConfig().getNotificationChannel(),
+            savedCustomerNotificationConfig.isEnabled());
+
+        return CustomerNotificationChannelConfigDTO
+            .builder()
+            .customerSettingId(savedCustomerNotificationConfig.getId())
+            .notificationConfigId(savedCustomerNotificationConfig.getId())
+            .enabled(savedCustomerNotificationConfig.isEnabled())
+            .build();
     }
 }
