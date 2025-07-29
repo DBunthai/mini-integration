@@ -6,5 +6,6 @@ import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotifi
 import mini.integration.customerservice.lib.QueryHandler;
 import org.springframework.data.domain.Page;
 
-public interface CustomerSettingNotificationQueryHandler extends QueryHandler<CustomerSettingNotificationQuery, Page<CustomerSettingNotificationDTO>> {
+public interface CustomerSettingNotificationQueryHandler
+                extends QueryHandler<CustomerSettingNotificationQuery, Page<CustomerSettingNotificationDTO>> {
 }

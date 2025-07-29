@@ -27,10 +27,8 @@ public class CustomerSettingAddCommandHandlerImpl implements CustomerSettingAddC
     @Override
     public CustomerSettingAddDTO handle(CustomerSettingAddCommand command) throws GeneralException {
 
-        CustomerSetting customerSetting = CustomerSetting.builder()
-            .customer(Customer.builder().id(command.getCustomerId()).build())
-            .regularPostedBalance(RegularPostedBalance.MONTHLY)
-            .build();
+        CustomerSetting customerSetting = CustomerSetting.builder().customer(Customer.builder().id(command.getCustomerId()).build())
+                        .regularPostedBalance(RegularPostedBalance.MONTHLY).build();
 
         CustomerSetting savedCustomerSetting = customerSettingRepository.save(customerSetting);
         log.info("Saved customer setting; CustomerSettingId: {}; CustomerId: {}; ", customerSetting.getId(), customerSetting.getCustomer().getId());

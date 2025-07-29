@@ -34,42 +34,26 @@ public class MemberShipPolicy {
     private int requiredLoyaltyYear;
 
     private static Set<MemberShipPolicy> POLICIES = Set.of(
-        MemberShipPolicy.builder()
-            .memberShipType(MemberShipType.BRONZE)
-            .requiredPostedBalanced(NEWCOMER_BALANCE)
-            .requiredLoyaltyYear(NEWCOMER_YEAR)
-            .build(),
+                    MemberShipPolicy.builder().memberShipType(MemberShipType.BRONZE).requiredPostedBalanced(NEWCOMER_BALANCE)
+                                    .requiredLoyaltyYear(NEWCOMER_YEAR).build(),
 
-        MemberShipPolicy.builder()
-            .memberShipType(MemberShipType.SILVER)
-            .requiredPostedBalanced(REGULAR_BALANCE)
-            .requiredLoyaltyYear(REGULAR_YEAR)
-            .build(),
+                    MemberShipPolicy.builder().memberShipType(MemberShipType.SILVER).requiredPostedBalanced(REGULAR_BALANCE)
+                                    .requiredLoyaltyYear(REGULAR_YEAR).build(),
 
-        MemberShipPolicy.builder()
-            .memberShipType(MemberShipType.GOLD)
-            .requiredPostedBalanced(PATRON_BALANCE)
-            .requiredLoyaltyYear(PATRON_YEAR)
-            .build(),
+                    MemberShipPolicy.builder().memberShipType(MemberShipType.GOLD).requiredPostedBalanced(PATRON_BALANCE)
+                                    .requiredLoyaltyYear(PATRON_YEAR).build(),
 
-        MemberShipPolicy.builder()
-            .memberShipType(MemberShipType.DIAMOND)
-            .requiredPostedBalanced(LEGACY_BALANCE)
-            .requiredLoyaltyYear(LEGACY_YEAR)
-            .build()
-    );
+                    MemberShipPolicy.builder().memberShipType(MemberShipType.DIAMOND).requiredPostedBalanced(LEGACY_BALANCE)
+                                    .requiredLoyaltyYear(LEGACY_YEAR).build());
 
     public static MemberShipType getMemberShip(BigDecimal postedBalance, OffsetDateTime registeredDate) {
         long loyaltyDuration = ChronoUnit.YEARS.between(OffsetDateTime.now(), registeredDate);
         return MemberShipPolicy.POLICIES.stream().filter(policy -> {
 
-                    boolean i = policy.getRequiredPostedBalanced().compareTo(postedBalance) <= 0 ||
-                        loyaltyDuration >= policy.getRequiredLoyaltyYear();
-                    return i;
-                }
-            ).max(Comparator.comparing(MemberShipPolicy::getRequiredPostedBalanced))
-            .map(MemberShipPolicy::getMemberShipType)
-            .orElse(MemberShipType.BRONZE);
+            boolean i = policy.getRequiredPostedBalanced().compareTo(postedBalance) <= 0 || loyaltyDuration >= policy.getRequiredLoyaltyYear();
+            return i;
+        }).max(Comparator.comparing(MemberShipPolicy::getRequiredPostedBalanced)).map(MemberShipPolicy::getMemberShipType)
+                        .orElse(MemberShipType.BRONZE);
 
     }
 }

@@ -29,7 +29,8 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
     private final CustomerCommandMapper customerCommandMapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public CustomerProfileEditCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
+    public CustomerProfileEditCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper,
+                    ApplicationEventPublisher eventPublisher) {
         this.customerWriteRepo = customerWriteRepo;
         this.customerCommandMapper = customerCommandMapper;
         this.eventPublisher = eventPublisher;
@@ -41,8 +42,7 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
 
         UUID id = UUID.fromString(command.getId());
 
-        final Customer customer = customerWriteRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Customer is not found"));
+        final Customer customer = customerWriteRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer is not found"));
 
         if (nonNull(command.getFirstName())) {
             command.getFirstName().ifPresent(customer::setFirstName);
@@ -63,9 +63,7 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
         if (nonNull(command.getContact())) {
             command.getContact().ifPresent(contactCommand -> {
                 Contact contact = customer.getContact();
-                Contact.ContactBuilder contactBuilder = Contact.builder()
-                    .email(contact.getEmail())
-                    .phoneNumber(contact.getPhoneNumber());
+                Contact.ContactBuilder contactBuilder = Contact.builder().email(contact.getEmail()).phoneNumber(contact.getPhoneNumber());
 
                 if (nonNull(contactCommand.getEmail())) {
                     contactCommand.getEmail().ifPresent(contactBuilder::email);
@@ -82,11 +80,8 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
 
             command.getAddress().ifPresent(addressCommand -> {
                 Address address = customer.getAddress();
-                Address.AddressBuilder addressBuilder = Address.builder()
-                    .line(address.getLine())
-                    .city(address.getCity())
-                    .state(address.getState())
-                    .zipCode(address.getZipCode());
+                Address.AddressBuilder addressBuilder = Address.builder().line(address.getLine()).city(address.getCity()).state(address.getState())
+                                .zipCode(address.getZipCode());
 
                 if (nonNull(addressCommand.getLine())) {
                     addressCommand.getLine().ifPresent(addressBuilder::line);

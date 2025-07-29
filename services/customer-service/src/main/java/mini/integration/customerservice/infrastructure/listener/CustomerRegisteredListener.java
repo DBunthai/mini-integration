@@ -16,7 +16,8 @@ public class CustomerRegisteredListener {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final CustomerSettingAddCommandHandler customerSettingAddCommandHandler;
 
-    public CustomerRegisteredListener(KafkaTemplate<String, String> kafkaTemplate, CustomerSettingAddCommandHandler customerSettingAddCommandHandler) {
+    public CustomerRegisteredListener(KafkaTemplate<String, String> kafkaTemplate,
+                    CustomerSettingAddCommandHandler customerSettingAddCommandHandler) {
         this.kafkaTemplate = kafkaTemplate;
         this.customerSettingAddCommandHandler = customerSettingAddCommandHandler;
     }
@@ -33,9 +34,7 @@ public class CustomerRegisteredListener {
     @EventListener
     public void customerSettingAddListening(CustomerRegisteredEvent event) throws GeneralException {
 
-        CustomerSettingAddCommand command = CustomerSettingAddCommand.builder()
-            .customerId(event.getId())
-            .build();
+        CustomerSettingAddCommand command = CustomerSettingAddCommand.builder().customerId(event.getId()).build();
 
         customerSettingAddCommandHandler.handle(command);
 

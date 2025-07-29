@@ -27,7 +27,8 @@ public class CustomerSettingNotificationQueryHandlerImpl implements CustomerSett
     private final CustomerSettingReadRepository customerSettingReadRepository;
     private final NotificationTypeReadRepository notificationTypeReadRepository;
 
-    public CustomerSettingNotificationQueryHandlerImpl(CustomerSettingReadRepository customerSettingReadRepository, NotificationTypeReadRepository notificationTypeReadRepository) {
+    public CustomerSettingNotificationQueryHandlerImpl(CustomerSettingReadRepository customerSettingReadRepository,
+                    NotificationTypeReadRepository notificationTypeReadRepository) {
         this.customerSettingReadRepository = customerSettingReadRepository;
         this.notificationTypeReadRepository = notificationTypeReadRepository;
     }
@@ -37,50 +38,32 @@ public class CustomerSettingNotificationQueryHandlerImpl implements CustomerSett
     public Page<CustomerSettingNotificationDTO> handle(CustomerSettingNotificationQuery query) throws GeneralException {
 
         CustomerSetting customerSetting = customerSettingReadRepository.findCustomerSettingByCustomer_Id(query.getCustomerId())
-            .orElseThrow(() -> new ResourceNotFoundException("Customer setting is not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Customer setting is not found"));
 
-        Map<UUID, Boolean> customerNotificationConfig =
-            customerSetting.getCustomerNotificationConfigs()
-                .stream().collect(Collectors.toMap(map ->
-                        map.getNotificationConfig().getId(),
-                    CustomerNotificationConfig::isEnabled)
-                );
+        Map<UUID, Boolean> customerNotificationConfig = customerSetting.getCustomerNotificationConfigs().stream()
+                        .collect(Collectors.toMap(map -> map.getNotificationConfig().getId(), CustomerNotificationConfig::isEnabled));
 
 
         List<NotificationType> notificationTypes = notificationTypeReadRepository.findAll();
 
-        List<CustomerSettingNotificationDTO> customerSettingNotificationDTOS = notificationTypes.stream()
-            .map(m ->
-            {
+        List<CustomerSettingNotificationDTO> customerSettingNotificationDTOS = notificationTypes.stream().map(m -> {
 
-                List<CustomerSettingNotificationDTO.CustomerNotificationConfigDTO>
-                    notificationConfigDTOS = m.getNotificationConfigs()
-                    .stream()
-                    .map(m2 -> {
+            List<CustomerSettingNotificationDTO.CustomerNotificationConfigDTO> notificationConfigDTOS =
+                            m.getNotificationConfigs().stream().map(m2 -> {
 
-                        Boolean customerConfig = customerNotificationConfig.getOrDefault(m2.getId(), null);
-                        boolean isOverriding = Objects.nonNull(customerConfig) ? customerConfig : m2.isDefaultEnable();
+                                Boolean customerConfig = customerNotificationConfig.getOrDefault(m2.getId(), null);
+                                boolean isOverriding = Objects.nonNull(customerConfig) ? customerConfig : m2.isDefaultEnable();
 
-                        return
-                            CustomerSettingNotificationDTO.CustomerNotificationConfigDTO
-                                .builder()
-                                .id(m2.getId())
-                                .notificationChannel(m2.getNotificationChannel())
-                                .enabled(isOverriding)
-                                .requiredEnable(m2.isRequiredEnable()).build()
-                            ;
-                    }).toList();
+                                return CustomerSettingNotificationDTO.CustomerNotificationConfigDTO.builder().id(m2.getId())
+                                                .notificationChannel(m2.getNotificationChannel()).enabled(isOverriding)
+                                                .requiredEnable(m2.isRequiredEnable()).build();
+                            }).toList();
 
 
-                return CustomerSettingNotificationDTO
-                    .builder()
-                    .id(m.getId())
-                    .name(m.getName())
-                    .enable(true)
-                    .notificationConfigs(notificationConfigDTOS)
-                    .description(m.getDescription()).build();
+            return CustomerSettingNotificationDTO.builder().id(m.getId()).name(m.getName()).enable(true).notificationConfigs(notificationConfigDTOS)
+                            .description(m.getDescription()).build();
 
-            }).toList();
+        }).toList();
 
 
         return new PageImpl<>(customerSettingNotificationDTOS);

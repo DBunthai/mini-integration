@@ -27,10 +27,7 @@ public class CustomerSettingQueryController {
     @GetMapping("/notification")
     public ResponseEntity<PageResponse> getCustomerSettingNotification(@PathVariable("customerId") String customerId) throws GeneralException {
 
-        CustomerSettingNotificationQuery customerSettingNotificationQuery =
-            CustomerSettingNotificationQuery.builder()
-                .customerId(customerId)
-                .build();
+        CustomerSettingNotificationQuery customerSettingNotificationQuery = CustomerSettingNotificationQuery.builder().customerId(customerId).build();
 
         var customerSettingNotifications = (Page<CustomerSettingNotificationDTO>) queryBus.dispatch(customerSettingNotificationQuery);
 
@@ -40,10 +37,7 @@ public class CustomerSettingQueryController {
     @GetMapping
     public ResponseEntity<?> getCustomerSetting(@PathVariable("customerId") String customerId) throws GeneralException {
 
-        CustomerSettingQuery customerSettingQuery =
-            CustomerSettingQuery.builder()
-                .customerId(customerId)
-                .build();
+        CustomerSettingQuery customerSettingQuery = CustomerSettingQuery.builder().customerId(customerId).build();
 
         var customerSettings = queryBus.dispatch(customerSettingQuery);
 

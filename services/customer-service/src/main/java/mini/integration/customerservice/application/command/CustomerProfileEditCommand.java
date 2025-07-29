@@ -44,9 +44,7 @@ public class CustomerProfileEditCommand {
 
         private Optional<@Size(max = 50, message = "Phone number is exceeded 50 characters") String> phoneNumber;
 
-        private Optional<
-            @Size(max = 320, message = "Email is exceeded 50 characters")
-            @Email(message = "Invalid Email") String> email;
+        private Optional<@Size(max = 320, message = "Email is exceeded 50 characters") @Email(message = "Invalid Email") String> email;
 
     }
 

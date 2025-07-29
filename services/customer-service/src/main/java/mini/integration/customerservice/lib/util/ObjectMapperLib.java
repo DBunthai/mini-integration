@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 public class ObjectMapperLib {
 
     public enum ObjectMapperRule {
-        RESTRICTED,
-        UNRESTRICTED
+        RESTRICTED, UNRESTRICTED
     }
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -37,8 +36,7 @@ public class ObjectMapperLib {
     }
 
     private static ObjectMapper objectMapperUnStrict() {
-        return objectMapperStrict
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return objectMapperStrict.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
     public static ObjectMapper objectMapper() {
@@ -50,9 +48,7 @@ public class ObjectMapperLib {
     }
 
     public static <T, E> List<E> mapList(List<T> list, Class<E> map, ObjectMapperRule objectMapperRule) {
-        return list.stream()
-            .map(m -> objectMapper(objectMapperRule).convertValue(m, map))
-            .collect(Collectors.toList());
+        return list.stream().map(m -> objectMapper(objectMapperRule).convertValue(m, map)).collect(Collectors.toList());
     }
 
     public static <T, E> E mapObj(T obj, Class<E> map, ObjectMapperRule objectMapperRule) {

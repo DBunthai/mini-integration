@@ -15,16 +15,13 @@ import java.util.UUID;
 public interface CustomerNotificationConfigRepository extends JpaRepository<CustomerNotificationConfig, UUID> {
 
     @Query("""
-        SELECT CNC FROM CustomerNotificationConfig CNC
-            WHERE
-                CNC.customerSetting.customer.id =  :customerId AND
-                CNC.notificationConfig.id = :notificationConfigId AND
-                CNC.notificationConfig.notificationChannel = :notificationChannel
-    """)
-    Optional<CustomerNotificationConfig> findCustomerNotificationConfig(
-        UUID customerId,
-        UUID notificationConfigId,
-        NotificationChannel notificationChannel
-    );
+                        SELECT CNC FROM CustomerNotificationConfig CNC
+                            WHERE
+                                CNC.customerSetting.customer.id =  :customerId AND
+                                CNC.notificationConfig.id = :notificationConfigId AND
+                                CNC.notificationConfig.notificationChannel = :notificationChannel
+                    """)
+    Optional<CustomerNotificationConfig> findCustomerNotificationConfig(UUID customerId, UUID notificationConfigId,
+                    NotificationChannel notificationChannel);
 
 }

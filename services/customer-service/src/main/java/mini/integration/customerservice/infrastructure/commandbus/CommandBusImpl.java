@@ -19,7 +19,7 @@ public class CommandBusImpl implements CommandBus {
         CommandHandler<C, R> handler = (CommandHandler<C, R>) handlers.get(command.getClass());
         if (handler != null) {
             return handler.handle(command);
-        }
-        else throw new GeneralException("No handler found for " + command.getClass());
+        } else
+            throw new GeneralException("No handler found for " + command.getClass());
     }
 }

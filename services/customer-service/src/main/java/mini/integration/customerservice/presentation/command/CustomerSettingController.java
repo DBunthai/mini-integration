@@ -22,18 +22,12 @@ public class CustomerSettingController {
     }
 
     @PatchMapping("/notification/{notificationConfigId}/channel-config")
-    public ResponseEntity<?> patchCustomerNotificationConfig(
-        @PathVariable("customerId") String customerId,
-        @PathVariable("notificationConfigId") String notificationConfigId,
-        @RequestBody @Valid CustomerNotificationChannelConfigCommand command) throws GeneralException {
+    public ResponseEntity<?> patchCustomerNotificationConfig(@PathVariable("customerId") String customerId,
+                    @PathVariable("notificationConfigId") String notificationConfigId,
+                    @RequestBody @Valid CustomerNotificationChannelConfigCommand command) throws GeneralException {
 
-        commandBus.dispatch(
-            CustomerNotificationChannelConfigCommand.builder()
-                .customerId(customerId)
-                .customerNotificationConfigId(notificationConfigId)
-                .enabled(command.isEnabled())
-                .build()
-        );
+        commandBus.dispatch(CustomerNotificationChannelConfigCommand.builder().customerId(customerId)
+                        .customerNotificationConfigId(notificationConfigId).enabled(command.isEnabled()).build());
 
         return ResponseEntity.ok().build();
     }

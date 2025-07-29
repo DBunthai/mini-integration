@@ -21,7 +21,8 @@ public class CustomerNotificationChannelConfigCommandHandlerImpl implements Cust
     private final CustomerSettingRepository customerSettingRepository;
     private final NotificationConfigRepository notificationConfigRepository;
 
-    public CustomerNotificationChannelConfigCommandHandlerImpl(CustomerNotificationConfigRepository customerNotificationConfigRepository, CustomerSettingRepository customerSettingRepository, NotificationConfigRepository notificationConfigRepository) {
+    public CustomerNotificationChannelConfigCommandHandlerImpl(CustomerNotificationConfigRepository customerNotificationConfigRepository,
+                    CustomerSettingRepository customerSettingRepository, NotificationConfigRepository notificationConfigRepository) {
         this.customerNotificationConfigRepository = customerNotificationConfigRepository;
         this.customerSettingRepository = customerSettingRepository;
         this.notificationConfigRepository = notificationConfigRepository;
@@ -33,46 +34,32 @@ public class CustomerNotificationChannelConfigCommandHandlerImpl implements Cust
 
 
         var notificationConfig = notificationConfigRepository.findById(command.getCustomerNotificationConfigId())
-            .orElseThrow(() -> new RuntimeException("Notification Config is not found"));
+                        .orElseThrow(() -> new RuntimeException("Notification Config is not found"));
 
         CustomerNotificationConfig customerNotificationConfig = customerNotificationConfigRepository
-            .findCustomerNotificationConfig(
-                command.getCustomerId(),
-                notificationConfig.getId(),
-                notificationConfig.getNotificationChannel()
-            )
-            .orElseGet(() ->
-                CustomerNotificationConfig
-                    .builder()
-                    .customerSetting(
-                        customerSettingRepository
-                            .findCustomerSettingByCustomer_Id(command.getCustomerId())
-                            .orElseThrow(() -> new RuntimeException("Customer Setting is not found"))
-                    )
-                    .notificationConfig(notificationConfig)
-                    .build());
+                        .findCustomerNotificationConfig(command.getCustomerId(), notificationConfig.getId(),
+                                        notificationConfig.getNotificationChannel())
+                        .orElseGet(() -> CustomerNotificationConfig.builder()
+                                        .customerSetting(customerSettingRepository.findCustomerSettingByCustomer_Id(command.getCustomerId())
+                                                        .orElseThrow(() -> new RuntimeException("Customer Setting is not found")))
+                                        .notificationConfig(notificationConfig).build());
 
 
         customerNotificationConfig.setEnabled(command.isEnabled());
         var savedCustomerNotificationConfig = customerNotificationConfigRepository.save(customerNotificationConfig);
         log.info("""
 
-                Save Customer Notification Config
-                    Customer: {},
-                    NotificationType: {}
-                    Channel: {},
-                    isEnabled To: {}
-                """,
-            savedCustomerNotificationConfig.getCustomerSetting().getCustomer().getId(),
-            savedCustomerNotificationConfig.getNotificationConfig().getNotificationType().getName(),
-            savedCustomerNotificationConfig.getNotificationConfig().getNotificationChannel(),
-            savedCustomerNotificationConfig.isEnabled());
+                        Save Customer Notification Config
+                            Customer: {},
+                            NotificationType: {}
+                            Channel: {},
+                            isEnabled To: {}
+                        """, savedCustomerNotificationConfig.getCustomerSetting().getCustomer().getId(),
+                        savedCustomerNotificationConfig.getNotificationConfig().getNotificationType().getName(),
+                        savedCustomerNotificationConfig.getNotificationConfig().getNotificationChannel(),
+                        savedCustomerNotificationConfig.isEnabled());
 
-        return CustomerNotificationChannelConfigDTO
-            .builder()
-            .customerSettingId(savedCustomerNotificationConfig.getId())
-            .notificationConfigId(savedCustomerNotificationConfig.getId())
-            .enabled(savedCustomerNotificationConfig.isEnabled())
-            .build();
+        return CustomerNotificationChannelConfigDTO.builder().customerSettingId(savedCustomerNotificationConfig.getId())
+                        .notificationConfigId(savedCustomerNotificationConfig.getId()).enabled(savedCustomerNotificationConfig.isEnabled()).build();
     }
 }

@@ -22,7 +22,10 @@ public class QueryBusConfig {
     private final CustomerSettingNotificationQueryHandler customerSettingNotificationQueryHandler;
     private final CustomerSettingQueryHandler customerSettingQueryHandler;
 
-    public QueryBusConfig(QueryBus queryBus, CustomerProfileQueryHandler customerProfileQueryHandler, PostedBalanceQueryHandler postedBalanceQueryHandler, CustomerSettingNotificationQueryHandler customerSettingNotificationQueryHandler, CustomerSettingQueryHandler customerSettingQueryHandler) {
+    public QueryBusConfig(QueryBus queryBus, CustomerProfileQueryHandler customerProfileQueryHandler,
+                    PostedBalanceQueryHandler postedBalanceQueryHandler,
+                    CustomerSettingNotificationQueryHandler customerSettingNotificationQueryHandler,
+                    CustomerSettingQueryHandler customerSettingQueryHandler) {
         this.queryBus = queryBus;
         this.customerProfileQueryHandler = customerProfileQueryHandler;
         this.postedBalanceQueryHandler = postedBalanceQueryHandler;

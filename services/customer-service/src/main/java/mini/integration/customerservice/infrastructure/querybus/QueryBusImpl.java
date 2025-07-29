@@ -24,7 +24,7 @@ public class QueryBusImpl implements QueryBus {
         QueryHandler<C, R> queryHandler = (QueryHandler<C, R>) handlers.get(query.getClass());
         if (Objects.nonNull(queryHandler)) {
             return queryHandler.handle(query);
-        }
-        else throw new GeneralException("No handler found for " + queryHandler.getClass());
+        } else
+            throw new GeneralException("No handler found for " + queryHandler.getClass());
     }
 }

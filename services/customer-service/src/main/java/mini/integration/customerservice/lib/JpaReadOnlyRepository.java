@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface JpaReadOnlyRepository<T, ID extends Serializable> extends Repository<T, ID> {
 
     Optional<T> findById(ID id);
+
     Iterable<T> findAll();
 
 }

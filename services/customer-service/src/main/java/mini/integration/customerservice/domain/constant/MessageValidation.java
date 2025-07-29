@@ -2,7 +2,7 @@ package mini.integration.customerservice.domain.constant;
 
 public class MessageValidation {
 
-    public static final String  TEST = "";
+    public static final String TEST = "";
 
     public static String MAX(String column, int length) {
         return String.format("%s is exceeded %d characters", column, length);

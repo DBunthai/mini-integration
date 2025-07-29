@@ -1,0 +1,18 @@
+# Top-level EditorConfig file
+root = true
+
+[*.java]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[*.xml]
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true

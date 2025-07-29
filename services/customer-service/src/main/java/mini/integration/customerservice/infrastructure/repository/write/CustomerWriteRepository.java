@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface CustomerWriteRepository extends JpaRepository<Customer, UUID> {
 
     boolean existsByContactEmail(String email);
+
     boolean existsByContactPhoneNumber(String phoneNumber);
 
 }

@@ -24,7 +24,8 @@ public class CustomerRegisterCommandHandlerImpl implements CustomerRegisterComma
     private final CustomerCommandMapper customerCommandMapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public CustomerRegisterCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
+    public CustomerRegisterCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper,
+                    ApplicationEventPublisher eventPublisher) {
         this.customerWriteRepo = customerWriteRepo;
         this.customerCommandMapper = customerCommandMapper;
         this.eventPublisher = eventPublisher;

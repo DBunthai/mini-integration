@@ -23,7 +23,10 @@ public class CommandBusConfig {
     private final CustomerNotificationChannelConfigCommandHandler customerNotificationConfigCommandHandler;
     private final CustomerSettingAddCommandHandler customerSettingAddCommandHandler;
 
-    public CommandBusConfig(CommandBus commandBus, CustomerRegisterCommandHandler customerRegisterCommandHandler, CustomerProfileEditCommandHandler customerProfileEditCommandHandler, PostedBalanceCommandHandler postedBalanceCommandHandler, CustomerNotificationChannelConfigCommandHandler customerNotificationChannelConfigCommandHandler, CustomerSettingAddCommandHandler customerSettingAddCommandHandler) {
+    public CommandBusConfig(CommandBus commandBus, CustomerRegisterCommandHandler customerRegisterCommandHandler,
+                    CustomerProfileEditCommandHandler customerProfileEditCommandHandler, PostedBalanceCommandHandler postedBalanceCommandHandler,
+                    CustomerNotificationChannelConfigCommandHandler customerNotificationChannelConfigCommandHandler,
+                    CustomerSettingAddCommandHandler customerSettingAddCommandHandler) {
         this.commandBus = commandBus;
         this.customerRegisterCommandHandler = customerRegisterCommandHandler;
         this.customerProfileEditCommandHandler = customerProfileEditCommandHandler;

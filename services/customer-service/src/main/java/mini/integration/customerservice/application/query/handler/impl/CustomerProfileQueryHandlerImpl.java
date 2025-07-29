@@ -38,8 +38,7 @@ public class CustomerProfileQueryHandlerImpl implements CustomerProfileQueryHand
     private Customer findCustomerById(String customerId) throws ResourceNotFoundException {
         UUID id = UUID.fromString(customerId);
 
-        final Customer customer = customerReadRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Customer is not found"));
+        final Customer customer = customerReadRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer is not found"));
 
         log.info("Customer: {} has found", id);
 
@@ -51,13 +50,11 @@ public class CustomerProfileQueryHandlerImpl implements CustomerProfileQueryHand
     public CustomerProfileDTO handle(CustomerProfileQuery query) throws GeneralException {
 
         Customer customer = findCustomerById(query.getId());
-        var postedBalanceDTO = (Optional<PostedBalanceDTO>) queryBus.dispatch(
-            PostedBalanceQuery.builder().customerId(customer.getId().toString()).build()
-        );
+        var postedBalanceDTO =
+                        (Optional<PostedBalanceDTO>) queryBus.dispatch(PostedBalanceQuery.builder().customerId(customer.getId().toString()).build());
 
-        MemberShipType memberShip = postedBalanceDTO.map(p ->
-            MemberShipPolicy.getMemberShip(p.getPostedAmount(), p.getRegisteredDate())
-        ).orElse(MemberShipType.BRONZE);
+        MemberShipType memberShip = postedBalanceDTO.map(p -> MemberShipPolicy.getMemberShip(p.getPostedAmount(), p.getRegisteredDate()))
+                        .orElse(MemberShipType.BRONZE);
 
         customer.setMemberShip(memberShip);
         return customerQueryMapper.customerToCustomerProfileDTO(customer);
