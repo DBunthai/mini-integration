@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import mini.integration.customerservice.domain.enumtype.RegularPostedBalance;
-import mini.integration.customerservice.lib.EntityBased;
+import mini.integration.lib.module.EntityBased;
 
 import java.util.Set;
 

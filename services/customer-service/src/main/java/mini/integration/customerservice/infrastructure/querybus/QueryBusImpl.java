@@ -1,8 +1,9 @@
 package mini.integration.customerservice.infrastructure.querybus;
 
-import mini.integration.customerservice.lib.CommandHandler;
-import mini.integration.customerservice.lib.QueryHandler;
-import mini.integration.customerservice.lib.exception.GeneralException;
+
+import mini.integration.lib.module.exception.GeneralException;
+import mini.integration.lib.module.QueryHandler;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

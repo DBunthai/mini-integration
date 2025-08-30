@@ -3,7 +3,7 @@ package mini.integration.customerservice.presentation.command;
 import jakarta.validation.Valid;
 import mini.integration.customerservice.application.command.CustomerNotificationChannelConfigCommand;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;

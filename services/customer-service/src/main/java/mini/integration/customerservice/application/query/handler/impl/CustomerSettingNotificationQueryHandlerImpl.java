@@ -9,7 +9,7 @@ import mini.integration.customerservice.exception.ResourceNotFoundException;
 import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotificationDTO;
 import mini.integration.customerservice.infrastructure.repository.read.CustomerSettingReadRepository;
 import mini.integration.customerservice.infrastructure.repository.read.NotificationTypeReadRepository;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;

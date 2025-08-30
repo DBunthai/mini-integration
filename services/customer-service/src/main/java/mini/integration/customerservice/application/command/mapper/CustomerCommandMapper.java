@@ -9,7 +9,7 @@ import mini.integration.customerservice.domain.event.CustomerProfileEditedEvent;
 import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
-import mini.integration.customerservice.lib.MapperResolver;
+import mini.integration.lib.module.MapperResolver;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

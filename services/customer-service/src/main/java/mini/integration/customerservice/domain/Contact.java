@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mini.integration.customerservice.domain.constant.PhoneRegion;
-import mini.integration.customerservice.lib.util.PhoneLib;
+import mini.integration.lib.module.util.PhoneLib;
 
 @Getter
 @Builder(builderClassName = "ContactBuilder", toBuilder = true)

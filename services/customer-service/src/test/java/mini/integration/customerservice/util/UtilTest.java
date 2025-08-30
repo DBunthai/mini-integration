@@ -4,7 +4,7 @@ import mini.integration.customerservice.domain.Address;
 import mini.integration.customerservice.domain.Contact;
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.enumtype.Gender;
-import mini.integration.customerservice.lib.util.FakerLib;
+import mini.integration.lib.module.util.FakerLib;
 
 public class UtilTest {
 

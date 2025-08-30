@@ -1,15 +1,14 @@
 package mini.integration.customerservice.infrastructure.listener.kafka;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import mini.integration.customerservice.application.command.PostedBalanceCommand;
 import mini.integration.customerservice.application.command.mapper.CustomerCommandMapper;
 import mini.integration.customerservice.domain.event.BalancePostedEvent;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
-import mini.integration.customerservice.lib.exception.GeneralException;
-import mini.integration.customerservice.lib.topic.CustomerEvent;
+import mini.integration.lib.module.exception.GeneralException;
+import mini.integration.lib.module.topic.CustomerEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
 package mini.integration.customerservice.infrastructure.commandbus;
 
 import mini.integration.customerservice.exception.BusinessRuleException;
-import mini.integration.customerservice.lib.CommandHandler;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.CommandHandler;
+import mini.integration.lib.module.exception.GeneralException;
 
 public interface CommandBus {
 

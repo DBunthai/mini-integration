@@ -1,6 +1,6 @@
 package mini.integration.customerservice.config;
 
-import mini.integration.customerservice.lib.util.ObjectMapperLib;
+import mini.integration.lib.module.util.ObjectMapperLib;
 import org.springframework.boot.autoconfigure.kafka.DefaultKafkaConsumerFactoryCustomizer;
 import org.springframework.boot.autoconfigure.kafka.DefaultKafkaProducerFactoryCustomizer;
 import org.springframework.context.annotation.Configuration;

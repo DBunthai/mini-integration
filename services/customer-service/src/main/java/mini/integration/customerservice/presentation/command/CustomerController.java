@@ -5,7 +5,7 @@ import mini.integration.customerservice.application.command.CustomerProfileEditC
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;

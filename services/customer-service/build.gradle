@@ -22,10 +22,14 @@ configurations {
 }
 
 repositories {
+    mavenLocal ()
     mavenCentral()
 }
 
 dependencies {
+
+    implementation 'mini.integration.lib:integration-lib:0.0.1'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 

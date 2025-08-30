@@ -2,7 +2,7 @@ package mini.integration.customerservice.infrastructure.repository.read;
 
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.PostedBalance;
-import mini.integration.customerservice.lib.JpaReadOnlyRepository;
+import mini.integration.lib.module.JpaReadOnlyRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

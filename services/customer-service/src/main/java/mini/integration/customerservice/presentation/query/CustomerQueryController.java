@@ -3,7 +3,7 @@ package mini.integration.customerservice.presentation.query;
 import mini.integration.customerservice.application.query.CustomerProfileQuery;
 import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
 import mini.integration.customerservice.infrastructure.querybus.QueryBus;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

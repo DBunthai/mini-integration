@@ -5,7 +5,7 @@ import mini.integration.customerservice.application.command.mapper.CustomerComma
 import mini.integration.customerservice.domain.PostedBalance;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.infrastructure.repository.write.PostedBalanceRepository;
-import mini.integration.customerservice.lib.CommandHandler;
+import mini.integration.lib.module.CommandHandler;
 
 public interface PostedBalanceCommandHandler extends CommandHandler<PostedBalanceCommand, PostedBalanceDTO> {
 

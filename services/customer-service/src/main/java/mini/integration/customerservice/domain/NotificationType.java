@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import mini.integration.customerservice.domain.enumtype.NotificationStatus;
-import mini.integration.customerservice.lib.EntityBased;
+import mini.integration.lib.module.EntityBased;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 

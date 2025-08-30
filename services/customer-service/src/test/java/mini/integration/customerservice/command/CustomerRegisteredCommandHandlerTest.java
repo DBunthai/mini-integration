@@ -4,7 +4,7 @@ import mini.integration.customerservice.application.command.CustomerRegisterAddr
 import mini.integration.customerservice.application.command.CustomerRegisterContactCommand;
 import mini.integration.customerservice.application.command.CustomerRegisterCommand;
 import mini.integration.customerservice.infrastructure.commandbus.CommandBus;
-import mini.integration.customerservice.lib.util.FakerLib;
+import mini.integration.lib.module.util.FakerLib;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

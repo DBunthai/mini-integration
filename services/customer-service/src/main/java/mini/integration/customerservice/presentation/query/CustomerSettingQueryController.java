@@ -4,8 +4,8 @@ import mini.integration.customerservice.application.query.CustomerSettingNotific
 import mini.integration.customerservice.application.query.CustomerSettingQuery;
 import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotificationDTO;
 import mini.integration.customerservice.infrastructure.querybus.QueryBus;
-import mini.integration.customerservice.lib.PageResponse;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.PageResponse;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -5,7 +5,7 @@ import mini.integration.customerservice.application.command.mapper.CustomerComma
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotificationDTO;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import mini.integration.customerservice.presentation.command.CustomerController;
 import mini.integration.customerservice.presentation.query.CustomerSettingQueryController;
 import mini.integration.customerservice.util.UtilTest;

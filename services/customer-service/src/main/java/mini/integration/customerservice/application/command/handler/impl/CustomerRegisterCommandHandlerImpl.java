@@ -10,7 +10,7 @@ import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
 import mini.integration.customerservice.exception.BusinessRuleException;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepository;
-import mini.integration.customerservice.lib.CommandHandler;
+import mini.integration.lib.module.CommandHandler;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 

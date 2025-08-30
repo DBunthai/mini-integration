@@ -7,7 +7,7 @@ import mini.integration.customerservice.application.command.mapper.CustomerComma
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.repository.read.CustomerSettingReadRepository;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import mini.integration.customerservice.util.UtilTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

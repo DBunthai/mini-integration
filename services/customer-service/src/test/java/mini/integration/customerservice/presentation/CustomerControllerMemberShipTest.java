@@ -8,7 +8,7 @@ import mini.integration.customerservice.domain.event.BalancePostedEvent;
 import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.listener.kafka.BalancePostedListener;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import mini.integration.customerservice.presentation.command.CustomerController;
 import mini.integration.customerservice.presentation.query.CustomerQueryController;
 import mini.integration.customerservice.util.UtilTest;

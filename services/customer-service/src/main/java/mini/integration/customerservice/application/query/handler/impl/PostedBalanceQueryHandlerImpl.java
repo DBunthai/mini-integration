@@ -6,8 +6,8 @@ import mini.integration.customerservice.application.query.mapper.CustomerQueryMa
 import mini.integration.customerservice.domain.PostedBalance;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.infrastructure.repository.read.PostedBalanceReadRepository;
-import mini.integration.customerservice.lib.QueryHandler;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.QueryHandler;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

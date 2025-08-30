@@ -13,7 +13,7 @@ import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.infrastructure.querybus.QueryBus;
 import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepository;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

@@ -2,7 +2,7 @@ package mini.integration.customerservice.infrastructure.listener;
 
 import mini.integration.customerservice.domain.event.CustomerProfileEditedEvent;
 import mini.integration.customerservice.domain.event.CustomerRegisteredEvent;
-import mini.integration.customerservice.lib.topic.CustomerEvent;
+import mini.integration.lib.module.topic.CustomerEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

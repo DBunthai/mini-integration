@@ -10,7 +10,7 @@ import mini.integration.customerservice.application.query.handler.impl.CustomerS
 import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.infrastructure.dto.CustomerRegisterDTO;
 import mini.integration.customerservice.infrastructure.dto.CustomerSettingNotificationDTO;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import mini.integration.customerservice.util.UtilTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

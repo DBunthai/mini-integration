@@ -10,7 +10,7 @@ import mini.integration.customerservice.domain.NotificationType;
 import mini.integration.customerservice.domain.enumtype.NotificationChannel;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerNotificationConfigRepository;
 import mini.integration.customerservice.infrastructure.repository.write.NotificationConfigRepository;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

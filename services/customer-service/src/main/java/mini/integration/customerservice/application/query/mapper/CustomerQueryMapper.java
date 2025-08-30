@@ -4,7 +4,7 @@ import mini.integration.customerservice.domain.Customer;
 import mini.integration.customerservice.domain.PostedBalance;
 import mini.integration.customerservice.infrastructure.dto.CustomerProfileDTO;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
-import mini.integration.customerservice.lib.MapperResolver;
+import mini.integration.lib.module.MapperResolver;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

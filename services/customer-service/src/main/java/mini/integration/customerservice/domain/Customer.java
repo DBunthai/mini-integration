@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import mini.integration.customerservice.domain.enumtype.Gender;
 import mini.integration.customerservice.domain.enumtype.MemberShipType;
-import mini.integration.customerservice.lib.EntityBased;
+import mini.integration.lib.module.EntityBased;
 
 
 @Entity

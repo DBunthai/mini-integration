@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import mini.integration.customerservice.lib.EntityBased;
+import mini.integration.lib.module.EntityBased;
 import org.springframework.data.annotation.Immutable;
 
 import java.math.BigDecimal;

@@ -1,7 +1,7 @@
 package mini.integration.customerservice.application.command.handler;
 
 import mini.integration.customerservice.application.command.CustomerProfileEditCommand;
-import mini.integration.customerservice.lib.CommandHandler;
+import mini.integration.lib.module.CommandHandler;
 
 import java.util.Optional;
 

@@ -9,7 +9,7 @@ import mini.integration.customerservice.infrastructure.dto.CustomerNotificationC
 import mini.integration.customerservice.infrastructure.repository.write.CustomerNotificationConfigRepository;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerSettingRepository;
 import mini.integration.customerservice.infrastructure.repository.write.NotificationConfigRepository;
-import mini.integration.customerservice.lib.exception.GeneralException;
+import mini.integration.lib.module.exception.GeneralException;
 import org.springframework.stereotype.Component;
 
 @Component

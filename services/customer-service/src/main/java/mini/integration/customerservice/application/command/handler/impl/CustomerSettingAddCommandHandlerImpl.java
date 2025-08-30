@@ -9,8 +9,8 @@ import mini.integration.customerservice.domain.CustomerSetting;
 import mini.integration.customerservice.domain.enumtype.RegularPostedBalance;
 import mini.integration.customerservice.infrastructure.dto.CustomerSettingAddDTO;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerSettingRepository;
-import mini.integration.customerservice.lib.exception.GeneralException;
-import mini.integration.customerservice.lib.util.ObjectMapperLib;
+import mini.integration.lib.module.exception.GeneralException;
+import mini.integration.lib.module.util.ObjectMapperLib;
 import org.springframework.stereotype.Component;
 
 @Component

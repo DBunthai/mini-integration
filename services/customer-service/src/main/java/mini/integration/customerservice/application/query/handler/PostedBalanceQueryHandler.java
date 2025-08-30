@@ -2,7 +2,7 @@ package mini.integration.customerservice.application.query.handler;
 
 import mini.integration.customerservice.application.query.PostedBalanceQuery;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
-import mini.integration.customerservice.lib.QueryHandler;
+import mini.integration.lib.module.QueryHandler;
 
 import java.util.Optional;
 
