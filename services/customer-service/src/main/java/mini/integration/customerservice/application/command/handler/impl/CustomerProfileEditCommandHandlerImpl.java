@@ -11,6 +11,7 @@ import mini.integration.customerservice.domain.enumtype.Gender;
 import mini.integration.customerservice.domain.event.CustomerProfileEditedEvent;
 import mini.integration.customerservice.exception.ResourceNotFoundException;
 import mini.integration.customerservice.infrastructure.repository.write.CustomerWriteRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -29,14 +30,14 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
     private final CustomerCommandMapper customerCommandMapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public CustomerProfileEditCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper,
-                    ApplicationEventPublisher eventPublisher) {
+    public CustomerProfileEditCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
         this.customerWriteRepo = customerWriteRepo;
         this.customerCommandMapper = customerCommandMapper;
         this.eventPublisher = eventPublisher;
     }
 
 
+    @CacheEvict(cacheNames = "customerProfiles", key = "#command.id")
     @Override
     public Optional<Void> handle(CustomerProfileEditCommand command) throws ResourceNotFoundException {
 
@@ -80,8 +81,7 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
 
             command.getAddress().ifPresent(addressCommand -> {
                 Address address = customer.getAddress();
-                Address.AddressBuilder addressBuilder = Address.builder().line(address.getLine()).city(address.getCity()).state(address.getState())
-                                .zipCode(address.getZipCode());
+                Address.AddressBuilder addressBuilder = Address.builder().line(address.getLine()).city(address.getCity()).state(address.getState()).zipCode(address.getZipCode());
 
                 if (nonNull(addressCommand.getLine())) {
                     addressCommand.getLine().ifPresent(addressBuilder::line);

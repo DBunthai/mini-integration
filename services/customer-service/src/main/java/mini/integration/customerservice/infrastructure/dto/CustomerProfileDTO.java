@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import mini.integration.customerservice.domain.enumtype.Gender;
 import mini.integration.customerservice.domain.enumtype.MemberShipType;
+import mini.integration.lib.module.DTOBased;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-public class CustomerProfileDTO {
+public class CustomerProfileDTO implements DTOBased {
 
     private UUID id;
     private String firstName;
@@ -37,7 +38,7 @@ public class CustomerProfileDTO {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class ContactDTO {
+    public static class ContactDTO implements DTOBased {
 
         private String phoneNumber;
         private String email;
@@ -48,7 +49,7 @@ public class CustomerProfileDTO {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class AddressDTO {
+    public static class AddressDTO implements DTOBased {
 
         private String line;
         private String city;

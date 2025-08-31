@@ -14,6 +14,7 @@ import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.infrastructure.querybus.QueryBus;
 import mini.integration.customerservice.infrastructure.repository.read.CustomerReadRepository;
 import mini.integration.lib.module.exception.GeneralException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -46,6 +47,7 @@ public class CustomerProfileQueryHandlerImpl implements CustomerProfileQueryHand
 
     }
 
+    @Cacheable(cacheNames = "customerProfiles", key = "#query.id")
     @Override
     public CustomerProfileDTO handle(CustomerProfileQuery query) throws GeneralException {
 
