@@ -28,7 +28,8 @@ repositories {
 
 dependencies {
 
-    implementation 'mini.integration.lib:integration-lib:0.0.2'
+//    implementation 'mini.integration.lib:integration-lib:0.0.2'
+    implementation group: 'io.github.dbunthai', name: 'mini-integration-lib', version: '0.1.3'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
