@@ -30,7 +30,8 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
     private final CustomerCommandMapper customerCommandMapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public CustomerProfileEditCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper, ApplicationEventPublisher eventPublisher) {
+    public CustomerProfileEditCommandHandlerImpl(CustomerWriteRepository customerWriteRepo, CustomerCommandMapper customerCommandMapper,
+                    ApplicationEventPublisher eventPublisher) {
         this.customerWriteRepo = customerWriteRepo;
         this.customerCommandMapper = customerCommandMapper;
         this.eventPublisher = eventPublisher;
@@ -81,7 +82,8 @@ public class CustomerProfileEditCommandHandlerImpl implements CustomerProfileEdi
 
             command.getAddress().ifPresent(addressCommand -> {
                 Address address = customer.getAddress();
-                Address.AddressBuilder addressBuilder = Address.builder().line(address.getLine()).city(address.getCity()).state(address.getState()).zipCode(address.getZipCode());
+                Address.AddressBuilder addressBuilder = Address.builder().line(address.getLine()).city(address.getCity()).state(address.getState())
+                                .zipCode(address.getZipCode());
 
                 if (nonNull(addressCommand.getLine())) {
                     addressCommand.getLine().ifPresent(addressBuilder::line);

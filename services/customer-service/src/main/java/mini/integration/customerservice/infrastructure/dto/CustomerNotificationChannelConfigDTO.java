@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
-public class CustomerNotificationChannelConfigDTO  {
+public class CustomerNotificationChannelConfigDTO {
 
 
     private UUID customerSettingId;

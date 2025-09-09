@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.5.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'com.diffplug.spotless' version '6.25.0'
+    id 'com.google.cloud.tools.jib' version '3.4.3'
 //    id 'checkstyle'
 }
 
@@ -22,7 +23,7 @@ configurations {
 }
 
 repositories {
-    mavenLocal ()
+    mavenLocal()
     mavenCentral()
 }
 
@@ -81,4 +82,41 @@ spotless {
 tasks.named('check') {
     dependsOn 'spotlessCheck'
 //    , 'checkstyleMain'
+}
+
+
+jib {
+    from {
+        image = 'openjdk:21-jdk-slim'   // Base JDK runtime
+    }
+    to {
+        image = 'customer'              // Default local image
+        tags = [version, 'latest']
+    }
+    container {
+        // Jib usually detects Spring Boot main class automatically
+        ports = ['8080']                   // Expose HTTP port
+        jvmFlags = [
+                '-XX:+UseContainerSupport',
+                '-XX:MaxRAMPercentage=75.0',
+//                '-Duser.timezone=America/New_York',
+                '-Dfile.encoding=UTF-8'
+        ]
+//        environment = [
+//                'SPRING_PROFILES_ACTIVE': 'default'
+//        ]
+//        user = '65532:65532'               // Run as non-root
+        labels = [
+                'org.opencontainers.image.title'   : 'customer-service',
+                'org.opencontainers.image.version' : version,
+                'org.opencontainers.image.source'  : 'https://github.com/DBunthai/mini-integration',
+                'org.opencontainers.image.licenses': 'Apache-2.0'
+        ]
+    }
+
+    // If you want to copy configs/scripts into the container
+    // extraDirectories {
+    //     paths = file('src/main/jib')
+    //     permissions = ['/scripts/start.sh': '755']
+    // }
 }

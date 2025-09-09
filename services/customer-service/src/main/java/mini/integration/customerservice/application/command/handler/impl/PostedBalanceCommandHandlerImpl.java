@@ -7,6 +7,7 @@ import mini.integration.customerservice.application.command.mapper.CustomerComma
 import mini.integration.customerservice.domain.PostedBalance;
 import mini.integration.customerservice.infrastructure.dto.PostedBalanceDTO;
 import mini.integration.customerservice.infrastructure.repository.write.PostedBalanceRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,6 +23,7 @@ public class PostedBalanceCommandHandlerImpl implements PostedBalanceCommandHand
     }
 
 
+    @CacheEvict(cacheNames = "customerProfiles", key = "#command.customerId")
     @Override
     public PostedBalanceDTO handle(PostedBalanceCommand command) {
 
