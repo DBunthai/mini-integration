@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.5.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'com.diffplug.spotless' version '6.25.0'
-    id 'com.google.cloud.tools.jib' version '3.4.3'
+    id 'com.google.cloud.tools.jib' version '3.4.5'
 //    id 'checkstyle'
 }
 
@@ -90,7 +90,7 @@ jib {
         image = 'openjdk:21-jdk-slim'   // Base JDK runtime
     }
     to {
-        image = 'customer'              // Default local image
+        image = 'customer-service'              // Default local image
         tags = [version, 'latest']
     }
     container {

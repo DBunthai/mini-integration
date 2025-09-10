@@ -214,6 +214,34 @@ services:
                 kafka-topics --create --topic daily.balance.posted --partitions 3 --replication-factor 3 --if-not-exists --bootstrap-server kafka0:29092'"
 
 
+
+    customer-service:
+        image: customer-service:latest
+        container_name: customer-service
+        ports:
+            - "8080:8080"
+        environment:
+            SPRING_DATASOURCE_URL: "jdbc:postgresql://customerdb-master:5432/customer"
+            SPRING_DATASOURCE_USERNAME: "mini"
+            SPRING_DATASOURCE_PASSWORD: "mini1234"
+            SPRING_JPA_SHOW_SQL: "true"
+            SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+            SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE: "America/New_York"
+            SPRING_JACKSON_TIME_ZONE: "America/New_York"
+            SPRING_DATA_REDIS_SENTINEL_MASTER: "mymaster"
+            SPRING_DATA_REDIS_SENTINEL_NODES: "redissentinel:26379,redissentinel-2:26380"
+            SPRING_DATA_REDIS_TIMEOUT: "5000"
+            SPRING_LIQUIBASE_ENABLED: "true"
+            SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka0:29092,kafka1:29192,kafka2:29292"
+            JAVA_TOOL_OPTIONS: "-Duser.timezone=America/New_York"
+        depends_on:
+            - redissentinel
+            - redissentinel-2
+            - kafka0
+            - kafka1
+            - kafka2            
+
+
 volumes:
     kafka0-data:
     kafka1-data:
